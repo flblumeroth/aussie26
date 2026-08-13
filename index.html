@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australien · Roadtrip Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css');
+:root{--bg:#0f1117;--card:#1a1d27;--card2:#22263a;--brd:#2e3250;--grn:#10b981;--yel:#f59e0b;--red:#ef4444;--blu:#4f7ef7;--txt:#e2e8f0;--mut:#94a3b8;--au:#06b6d4;--nat:#3E6650;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Manrope',sans-serif;font-size:14px;line-height:1.5;}
+/* Header */
+.hdr{background:linear-gradient(135deg,#1a1d27,#0f1117);border-bottom:1px solid var(--brd);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo h1{font-family:'Fraunces',serif;font-size:17px;font-weight:600;}
+.logo p{font-size:11px;color:var(--mut);}
+.nbtn{background:var(--card);border:1px solid var(--brd);color:var(--txt);padding:4px 11px;border-radius:6px;cursor:pointer;font-size:12px;text-decoration:none;display:inline-block;}
+.nbtn:hover{background:var(--card2);}
+/* Stats */
+.stats{display:flex;gap:10px;padding:14px 20px;border-bottom:1px solid var(--brd);flex-wrap:wrap;}
+.stat{background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:8px 14px;min-width:90px;}
+.sv{font-size:22px;font-weight:700;font-family:'Fraunces',serif;}
+.sl{font-size:11px;color:var(--mut);margin-top:1px;}
+/* Tabs */
+.wrap{max-width:1100px;margin:0 auto;padding:14px;}
+.tabs{display:flex;gap:4px;margin-bottom:14px;border-bottom:1px solid var(--brd);}
+.tab{padding:7px 14px;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:500;color:var(--mut);border:1px solid transparent;border-bottom:none;}
+.tab.active{background:var(--card);color:var(--au);border-color:var(--brd);border-bottom:1px solid var(--card);margin-bottom:-1px;}
+.tc{display:none;}.tc.active{display:block;}
+/* Cards */
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+.card{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;opacity:0;animation:fadeUp .4s ease forwards;overflow-wrap:anywhere;}
+.card:hover{border-color:var(--au);background:var(--card2);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* Hero */
+.hero{background:linear-gradient(135deg,#1D3326 0%,#2F4D3A 55%,#3E6650 100%);border-radius:12px;padding:24px;color:#F7F2E7;position:relative;overflow:hidden;margin-bottom:16px;}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(217,164,65,0.2),transparent 55%),radial-gradient(circle at 10% 90%,rgba(200,120,79,0.15),transparent 50%);}
+.hero-inner{position:relative;z-index:1;}
+.hero h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:6px;}
+.hero p{font-size:13px;color:#E4DCC9;margin:0;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.badge{background:rgba(247,242,231,0.12);border:0.5px solid rgba(247,242,231,0.3);border-radius:999px;padding:4px 10px;font-size:11px;color:#F7F2E7;display:inline-flex;align-items:center;gap:5px;}
+/* Sections */
+.sec-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin:20px 0 10px;}
+.sec-title:first-child{margin-top:0;}
+/* Pill */
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;}
+.pill-must{background:rgba(16,185,129,.15);color:#10b981;}
+.pill-nice{background:rgba(245,158,11,.15);color:#f59e0b;}
+.pill-warn{background:rgba(239,68,68,.15);color:#ef4444;}
+.pill-region{background:rgba(6,182,212,.12);color:#06b6d4;}
+/* Table */
+.tbl-wrap{border:1px solid var(--brd);border-radius:10px;overflow:hidden;max-height:500px;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;padding:8px 10px;font-size:11px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--brd);background:var(--card);position:sticky;top:0;z-index:1;}
+td{padding:8px 10px;border-bottom:1px solid rgba(46,50,80,.4);vertical-align:top;}
+tr:hover td{background:var(--card2);}
+tr:last-child td{border-bottom:none;}
+/* Budget bars */
+.barrow{margin-bottom:10px;}
+.barlabel{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:4px;}
+.bartrack{background:var(--card2);border-radius:4px;height:8px;overflow:hidden;}
+.barfill{height:100%;border-radius:4px;}
+.total-bar{background:linear-gradient(135deg,#1D3326,#3E6650);color:#F7F2E7;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+.total-num{font-family:'Fraunces',serif;font-size:24px;font-weight:600;}
+/* Stop list */
+.stop{display:flex;gap:12px;align-items:flex-start;}
+.stopnum{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--nat);min-width:26px;}
+/* Alert */
+.alert{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:#fca5a5;margin-bottom:10px;}
+.info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:#67e8f9;margin-bottom:10px;}
+/* Link btn */
+a.lbtn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--nat);background:rgba(62,102,80,.15);border:1px solid rgba(62,102,80,.3);border-radius:6px;padding:4px 9px;text-decoration:none;margin-top:6px;}
+a.lbtn:hover{background:rgba(62,102,80,.3);}
+@media(max-width:600px){.stats{gap:6px;}.stat{min-width:70px;}.sv{font-size:18px;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">
+    <span style="font-size:26px">🦘</span>
+    <div><h1>Australien · Roadtrip 2026</h1><p>Sydney → Cairns · Wohnmobil-Abenteuer</p></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <a href="/" class="nbtn">← Portal</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="sv" style="color:var(--au)">39</div><div class="sl">Reisetage</div></div>
+  <div class="stat"><div class="sv" style="color:var(--nat)">34</div><div class="sl">Camper-Nächte</div></div>
+  <div class="stat"><div class="sv" style="color:var(--yel)">~2.800</div><div class="sl">km Route</div></div>
+  <div class="stat"><div class="sv" style="color:var(--grn)">15</div><div class="sl">Etappen</div></div>
+  <div class="stat"><div class="sv" style="color:var(--red)">≈ €8.000</div><div class="sl">Zusatzbudget</div></div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-inner">
+      <h2>Sydney → Cairns: Wohnmobil-Abenteuer für Naturentdecker</h2>
+      <p>6 Personen · 2 Erwachsene, Kinder 4 / 6 / 8 / 9 Jahre · Fokus: Regenwald, Riff &amp; Wildlife</p>
+      <div class="badges">
+        <span class="badge"><i class="ti ti-calendar"></i> 01.08. – 08.09.2026</span>
+        <span class="badge"><i class="ti ti-route"></i> ca. 2.800 km, 34 Camper-Nächte</span>
+        <span class="badge"><i class="ti ti-leaf"></i> Regenwald · Great Barrier Reef · Wildlife</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="sTab('uebersicht',this)">📋 Übersicht</div>
+    <div class="tab" onclick="sTab('etappen',this)">🗺 Etappen</div>
+    <div class="tab" onclick="sTab('tagesplan',this)">📅 Tagesplan</div>
+    <div class="tab" onclick="sTab('highlights',this)">🌿 Naturhighlights</div>
+    <div class="tab" onclick="sTab('budget',this)">💰 Budget</div>
+    <div class="tab" onclick="sTab('tipps',this)">💡 Insider-Tipps</div>
+    <div class="tab" onclick="sTab('camper',this)">🚐 Camper</div>
+    <div class="tab" onclick="sTab('flug',this)">📋 Buchungen</div>
+    <div class="tab" onclick="sTab('versicherung',this)">🛡 Versicherung</div>
+    <div class="tab" onclick="sTab('dokumente',this)">🗂 Dokumente</div>
+    <div class="tab" onclick="sTab('konnektivitaet',this)">📶 Konnektivität</div>
+  </div>
+
+  <div id="tuebersicht" class="tc active"></div>
+  <div id="tetappen" class="tc"></div>
+  <div id="ttagesplan" class="tc"></div>
+  <div id="thighlights" class="tc"></div>
+  <div id="tbudget" class="tc"></div>
+  <div id="ttipps" class="tc"></div>
+  <div id="tcamper" class="tc"></div>
+  <div id="tflug" class="tc"></div>
+  <div id="tversicherung" class="tc"></div>
+  <div id="tdokumente" class="tc"></div>
+  <div id="tkonnektivitaet" class="tc"></div>
+</div>
+
+<script>
+function sTab(n,el){
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('t'+n).classList.add('active');
+  el.classList.add('active');
+}
+function stagger(sel){document.querySelectorAll(sel).forEach((el,i)=>el.style.animationDelay=(i*.04)+'s');}
+
+// ---------- Reisekasse live (Belege per KI-Scan, eigener lokaler Dienst Port 5058) ----------
+const BUDGET_API='http://100.106.14.59:5058';
+const BUDGET_KAT=['Verpflegung','Aktivitäten & Touren','Camping','Diesel','Sydney-Tage','Sonstiges'];
+
+async function loadLiveBudget(){
+  const card=document.getElementById('live-budget-card');
+  if(!card) return;
+  try{
+    const [sumRes,ausRes]=await Promise.all([
+      fetch(BUDGET_API+'/api/summary'), fetch(BUDGET_API+'/api/ausgaben')
+    ]);
+    const sum=await sumRes.json();
+    const ausgaben=await ausRes.json();
+    renderLiveBudget(sum,ausgaben);
+  }catch(e){
+    card.innerHTML='<div style="font-size:12px;color:#8b91a3">Reisekasse-Dienst gerade nicht erreichbar (nur im Heimnetz/über Tailscale verfügbar).</div>';
+  }
+}
+
+function renderLiveBudget(sum,ausgaben){
+  const card=document.getElementById('live-budget-card');
+  const rows=Object.entries(sum.kategorien).map(([k,v])=>{
+    const pct=v.plan_eur>0?Math.min(100,Math.round(v.ist_eur/v.plan_eur*100)):0;
+    const over=v.ist_eur>v.plan_eur;
+    return `<div class="barrow"><div class="barlabel"><span>${k}${v.unbestaetigt?` <span style="color:#FAC775">(${v.unbestaetigt} zu prüfen)</span>`:''}</span><b style="color:${over?'#ef4444':'#e8eaf0'}">€ ${v.ist_eur.toFixed(0)} / ${v.plan_eur}</b></div><div class="bartrack"><div class="barfill" style="width:${pct}%;background:${over?'#ef4444':'#1D9E75'}"></div></div></div>`;
+  }).join('');
+
+  const offen=ausgaben.filter(a=>!a.bestaetigt);
+  const bestaetigt=ausgaben.filter(a=>a.bestaetigt);
+
+  const offenHtml=offen.map(a=>`
+    <div style="border:1px solid #FAC775;border-radius:8px;padding:10px;margin-bottom:8px;font-size:12px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+        <input type="date" id="d-${a.id}" value="${a.datum||''}" style="background:#0f1117;border:1px solid #262b38;border-radius:6px;color:#e8eaf0;padding:4px;font-size:11px">
+        <input type="number" step="0.01" id="b-${a.id}" value="${a.betrag_aud}" style="width:80px;background:#0f1117;border:1px solid #262b38;border-radius:6px;color:#e8eaf0;padding:4px;font-size:11px">
+        <span style="align-self:center;color:#8b91a3">AUD</span>
+        <select id="k-${a.id}" style="background:#0f1117;border:1px solid #262b38;border-radius:6px;color:#e8eaf0;padding:4px;font-size:11px">
+          ${BUDGET_KAT.map(k=>`<option value="${k}" ${k===a.kategorie?'selected':''}>${k}</option>`).join('')}
+        </select>
+      </div>
+      <input type="text" id="t-${a.id}" value="${(a.beschreibung||'').replace(/"/g,'&quot;')}" placeholder="Beschreibung" style="width:100%;background:#0f1117;border:1px solid #262b38;border-radius:6px;color:#e8eaf0;padding:4px;font-size:11px;margin-bottom:6px">
+      ${a.beleg?`<a href="${BUDGET_API}/uploads/${a.beleg}" target="_blank" style="color:#4f7ef7;font-size:11px">Beleg-Foto ansehen</a><br>`:''}
+      <div style="margin-top:6px">
+        <button onclick="confirmAusgabe(${a.id})" style="background:#1D9E75;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer">Bestätigen</button>
+        <button onclick="deleteAusgabe(${a.id})" style="background:#262b38;color:#e8eaf0;border:none;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer">Löschen</button>
+      </div>
+    </div>`).join('');
+
+  const bestRows=bestaetigt.slice(0,15).map(a=>`<tr><td>${a.datum||'–'}</td><td>${a.kategorie}</td><td>${a.beschreibung||''}</td><td style="text-align:right">${a.betrag_aud} AUD</td></tr>`).join('');
+
+  card.innerHTML=`
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px">Gesamt: € ${sum.total_ist_eur} von € ${sum.total_plan_eur} (Rest € ${sum.total_rest_eur}) · Kurs 1 AUD ≈ € ${sum.kurs_aud_eur}</div>
+    ${rows}
+    ${offen.length?`<div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8b91a3;margin:16px 0 8px">Zu prüfen (${offen.length})</div>${offenHtml}`:''}
+    ${bestaetigt.length?`<div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8b91a3;margin:16px 0 8px">Bestätigt (letzte ${Math.min(15,bestaetigt.length)})</div><table style="font-size:11px"><tbody>${bestRows}</tbody></table>`:''}
+    ${!ausgaben.length?'<div style="font-size:12px;color:#8b91a3">Noch keine Belege erfasst.</div>':''}
+  `;
+}
+
+async function uploadBeleg(){
+  const input=document.getElementById('beleg-file');
+  const resultEl=document.getElementById('beleg-scan-result');
+  if(!input.files.length){ alert('Bitte zuerst ein Foto oder PDF auswählen.'); return; }
+  resultEl.innerHTML='<div style="font-size:12px;color:#8b91a3">Lade hoch &amp; scanne…</div>';
+  try{
+    const fd=new FormData(); fd.append('file',input.files[0]);
+    const upRes=await fetch(BUDGET_API+'/api/upload',{method:'POST',body:fd});
+    const up=await upRes.json();
+    if(!upRes.ok) throw new Error(up.error||'Upload fehlgeschlagen');
+    const scanRes=await fetch(BUDGET_API+'/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:up.filename})});
+    const scan=await scanRes.json();
+    if(!scanRes.ok) throw new Error(scan.error||'Scan fehlgeschlagen');
+    if(scan.ist_beleg===false){
+      resultEl.innerHTML='<div style="font-size:12px;color:#8b91a3">Sieht nicht wie ein Beleg aus — nichts gespeichert.</div>';
+      input.value=''; return;
+    }
+    const saveRes=await fetch(BUDGET_API+'/api/ausgaben',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      datum:scan.datum, betrag_aud:scan.betrag||0, waehrung:scan.waehrung||'AUD',
+      kategorie:BUDGET_KAT.includes(scan.kategorie_vorschlag)?scan.kategorie_vorschlag:'Sonstiges',
+      beschreibung:scan.beschreibung||'', lieferant:scan.lieferant||'', beleg:scan.beleg,
+      bestaetigt:false, quelle:'dashboard-upload'
+    })});
+    if(!saveRes.ok) throw new Error('Speichern fehlgeschlagen');
+    resultEl.innerHTML='<div style="font-size:12px;color:#1D9E75">Gescannt — bitte unten prüfen und bestätigen.</div>';
+    input.value='';
+    await loadLiveBudget();
+  }catch(e){
+    resultEl.innerHTML=`<div style="font-size:12px;color:#ef4444">Fehler: ${e.message}</div>`;
+  }
+}
+
+async function confirmAusgabe(id){
+  const datum=document.getElementById(`d-${id}`).value;
+  const betrag_aud=document.getElementById(`b-${id}`).value;
+  const kategorie=document.getElementById(`k-${id}`).value;
+  const beschreibung=document.getElementById(`t-${id}`).value;
+  await fetch(`${BUDGET_API}/api/ausgaben/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({datum,betrag_aud,waehrung:'AUD',kategorie,beschreibung,bestaetigt:true})});
+  await loadLiveBudget();
+}
+
+async function deleteAusgabe(id){
+  if(!confirm('Diesen Beleg wirklich löschen?')) return;
+  await fetch(`${BUDGET_API}/api/ausgaben/${id}`,{method:'DELETE'});
+  await loadLiveBudget();
+}
+
+// DATA
+const budget=[
+  {label:'Verpflegung (Selbstversorger + Restaurants)',eur:2300,aud:3830,color:'#1D9E75'},
+  {label:'Aktivitäten & Touren (inkl. Riff-Trip)',eur:2900,aud:4830,color:'#0F6E56'},
+  {label:'Camping (34 Nächte, Powered Sites bevorzugt)',eur:1000,aud:1660,color:'#639922'},
+  {label:'Diesel (ca. 2.800 km)',eur:620,aud:1030,color:'#97C459'},
+  {label:'Sydney-Tage (Transport, Snacks)',eur:200,aud:330,color:'#FAC775'},
+  {label:'Puffer (15–20%)',eur:980,aud:1630,color:'#4f7ef7'}
+];
+
+const checklist=[
+  {text:'Versicherung: ✅ TravelSecure JRK Komfort Familie abgeschlossen (09.07.2026) — vollständiger Schutz für Australien. Details → Tab 🛡 Versicherung.',warn:false},
+  {text:'Internationalen Führerschein beantragen — ✅ Termin bei Führerscheinstelle gebucht!',warn:false},
+  {text:'❌ K\'gari (Fraser Island) GESTRICHEN (07.08.) — Standard-Miet-4WD ist auf der Insel nicht erlaubt, nur teure geführte Touren (≈ € 590/Familie) oder separater lokaler 4WD-Verleih in Hervey Bay wären nötig gewesen. Ersatz: Carlo Sand Blow direkt ab Rainbow Beach, kostenlos, keine Buchung nötig.',warn:false},
+  {text:'Whitsundays-Segeltour ab Airlie Beach buchen — Altersfreigabe für 4-Jährige vorab beim Anbieter bestätigen!',warn:true},
+  {text:'Green Island Tagesausflug ab Cairns buchen (45 Min Fähre, Riff, Glasbodenboot — ideal für Kinder).'},
+  {text:'Daintree River Bootsfahrt & Cape Tribulation vorab buchen (Halbtagstour ab Cairns oder Port Douglas).'},
+  {text:'Wassertaxi nach Dunk Island (Mission Beach) vorab reservieren.'},
+  {text:'Kuranda Skyrail & Scenic Railway Kombiticket online buchen (günstiger als Tageskasse).'},
+  {text:'Australia Zoo Tickets online buchen.'},
+  {text:'Caravan-Park-Stellplätze für Byron Bay, Gold Coast, Airlie Beach & Cairns vorbuchen (Winterferien AU!).'},
+  {text:'Discovery Parks / NRMA Parks für Etappen mit Kindern bevorzugen (Pool, Spielplatz, Powered Sites).'},
+  {text:'WikiCamps Australia & QPWS-Camping-App installieren.'},
+  {text:'Reiseapotheke mit deutschen Kinderpräparaten mitbringen (Ibuprofen-Saft, Fieberzäpfchen etc.).'},
+  {text:'Blue Mountains-Ausflug für Sydney-Tage planen (Featherdale, Three Sisters).'},
+  {text:'Letzter Camper-Abend (03.09.): Campingplatz nahe Cairns-Depot buchen — TASMAN Cairns Cool Waters oder Lake Placid Rainforest Retreat empfohlen. Nicht am letzten Tag noch weit fahren!',warn:true},
+];
+
+const highlights=[
+  {icon:'ti-fish',title:'Great Barrier Reef',text:'Green Island (45 Min ab Cairns): Glasbodenboot, Schnorcheln, Korallen. Ideal für Kinder 4–9. Das Highlight Australiens.'},
+  {icon:'ti-trees',title:'Daintree & Cape Tribulation',text:'Ältester Regenwald der Welt trifft auf den Ozean. Daintree River Bootsfahrt mit Krokodilen, Cape Trib Strand.'},
+  {icon:'ti-mountain',title:'Carlo Sand Blow (⭐ ERSATZ für K\'gari, gestrichen 07.08.)',text:'600 m leichter Wanderweg ab dem Carlo-Parkplatz durch Eukalyptuswald zu einer 15 Hektar großen, windgeformten Wanderdüne mit Blick über Rainbow Beach, Wide Bay und die Cooloola-Küste. Alternativ ca. 1,5 km Fußweg direkt aus dem Ort (steiles Stück am Schluss). Kostenlos, keine Tour nötig, ca. 1 h.'},
+  {icon:'ti-anchor',title:'Whitsundays & Whitehaven Beach',text:'Segeltour zum berühmtesten Strand Australiens mit Schnorchel-Stopp am Hardy Reef.'},
+  {icon:'ti-paw',title:'Wilde Platypus in Eungella',text:'Eine der verlässlichsten Stellen weltweit. Broken River Bridge, morgens oder abends.'},
+  {icon:'ti-feather',title:'Daintree & Kuranda',text:'Skyrail über die Baumkronen, historische Scenic Railway zurück.'},
+  {icon:'ti-sun',title:'Magnetic Island',text:'Wilde Koalas und Felskängurus in freier Wildbahn. Fähre ab Townsville.'},
+  {icon:'ti-mountain',title:'Springbrook & Lamington NP',text:'Gondwana-Regenwald, Wasserfälle, Natural Bridge in Springbrook — plus Treetop Walk in Lamington NP (Green Mountains/Oreillys) an einem eigenen Tag, da beide Parks ~2h auseinanderliegen und nicht an einem Tag kombinierbar sind.'},
+  {icon:'ti-binoculars',title:'Blue Mountains (Sydney-Finale)',text:'Three Sisters, Eukalyptuswälder, Featherdale Wildlife Park.'},
+  {icon:'ti-wave-sine',title:'Cape Byron Lighthouse',text:'3,7 km Küstenwanderung, Aug–Nov Walbeobachtung möglich.'}
+];
+
+const bestpicks=[
+  {cat:'Bestes Naturerlebnis',pick:'Wilde Platypus, Eungella NP',note:'Kostenlos, früh morgens/abends an der Broken River Bridge.'},
+  {cat:'Must-Do Riff-Erlebnis',pick:'Green Island ab Cairns',note:'45 Min Fähre, Glasbodenboot, Schnorcheln — ideal für Kinder 4–9.'},
+  {cat:'Beste Tour (aktualisiert 07.08.)',pick:'Carlo Sand Blow, Rainbow Beach',note:'⭐ Ersatz für K\'gari (gestrichen, Standard-Miet-4WD auf der Insel nicht erlaubt) — 600 m Wanderweg direkt ab Ort, kostenlos, keine kommerzielle Tour nötig.'},
+  {cat:'Schönster Strand',pick:'Whitehaven Beach, Whitsundays',note:'Per Segeltour erreichbar, Schnorchel-Stopp einplanen.'},
+  {cat:'Beste Wildlife-Begegnung',pick:'Magnetic Island — Koalas & Felskängurus',note:'Fähre ab Townsville, Wanderwege direkt zu den Tieren.'},
+  {cat:'Unvergesslichster Moment',pick:'Daintree River Bootsfahrt mit Krokodilen',note:'Kinder sind begeistert, sichere Führung, 1,5h ab Port Douglas.'}
+];
+
+const stops=[
+  {name:'Lane Cove River (Sydney)',region:'NSW',nights:1,from:'~49 km ab Caringbah Depot (inkl. IKEA-Stopp)',
+   hi:'🌿 Erste Nacht — ca. 1 h vom Depot inkl. IKEA-Stopp! Lane Cove River Tourist Park liegt mitten im Lane Cove National Park. WoMo in Ruhe einrichten, Kinder toben im Park, abends am Flussufer entspannen.',
+   park:'Lane Cove River Tourist Park',parkNote:'4,4★ · Beheizter Pool, großer Spielplatz, Powered Sites, Küche — ideal zum Eingewöhnen ins WoMo-Leben. Buchung: exploreparks.com.au',
+   parkUrl:'https://www.google.com/maps/search/Lane+Cove+River+Tourist+Park+NSW/@-33.763,151.160,14z',
+   market:'⛽ TAG 1-EINKAUF VOR ABFAHRT: BCF Caringbah (2 km vom Depot) → Woolworths Caringbah/Miranda (~5 min) → IKEA Tempe (17 km/22 min, liegt fast auf der Route)',marketNote:'BCF + Woolworths direkt beim Depot erledigen, kein Umweg. IKEA Tempe liegt auf dem Weg Richtung Lane Cove (Princes Hwy/M1 Nord) — nur ca. 15 Min Umweg gegenüber der Direktstrecke, da fast auf der Route. Gut für WoMo-Kleinkram (Behälter, Textilien, günstige Küchensachen), die BCF/Woolworths nicht abdecken.',
+   marketUrl:'https://www.google.com/maps/search/BCF+Caringbah+NSW/@-34.032,151.122,14z',
+   resto:'Lindfield Shops / Burns Road',restoNote:'Einfache Supermarkt-Lage für Abendessen am ersten Abend — oder direkt im Park kochen',
+   restoUrl:'https://www.google.com/maps/search/shops+near+lane+cove+river+tourist+park+nsw/@-33.763,151.160,13z',
+   warn:'TAG 1-REIHENFOLGE: ① BCF Caringbah (Gaskartuschen + Campingcheck) ② Woolworths Caringbah/Miranda (Großeinkauf) ③ IKEA Tempe (17 km, ~22 min ab Depot — WoMo-Kleinkram) ④ WoMo beladen ⑤ ~35 min weiter Richtung Lane Cove → Powered Site, ankommen, durchatmen. Gesamt ca. 1 h Fahrzeit statt 40 min direkt.'},
+  {name:'Budgewoi',region:'NSW',nights:1,from:'ab Lane Cove River',hi:'⚡ IST-Route — spontan eingefügter Zwischenstopp, stand nicht im Originalplan. Gleicht sich mit der auf 1 Nacht verkürzten Port-Stephens-Etappe aus, kein Zeitverlust für die Folgeetappen.',
+   park:'NRMA Budgewoi Holiday Park',parkNote:'57 AUD bezahlt, Central Coast',
+   parkUrl:'https://www.google.com/maps/search/NRMA+Budgewoi+Holiday+Park/@-33.229,151.559,14z',
+   market:null,resto:null,warn:null},
+  {name:'Port Stephens',region:'NSW',nights:1,from:'~230 km ab Budgewoi',hi:'Stockton-Sanddünen sandboarden (größte Wanderdünen der Südhalbkugel!), Delfin-Cruise Nelson Bay, Tilligerry Habitat (wilde Koalas, kostenlos)',
+   park:'Ingenia Holidays One Mile Beach',parkNote:'✅ GEBUCHT (#266436, 03.-04.08., 104 AUD bezahlt) – direkt am Strand von One Mile Beach, 15 Acres, Powered Slab Site. Soldiers Point/Shoal Bay waren ausgebucht.',
+   parkUrl:'https://www.google.com/maps/search/Ingenia+Holidays+One+Mile+Beach/@-32.735,152.128,15z',
+   market:'Woolworths Nelson Bay',marketNote:'Ausreichender Parkplatz, gut erreichbar',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJIXHJd96Dc2sR_dA-8k_abVQ',
+   resto:null,warn:'Delfin-Cruise: Moonshadow Dolphin Discovery, 1,5h, Abfahrten 10:30/13:30 Uhr — reine Beobachtung statt Boom-Netting (Winter zu kalt fürs Netz)'},
+  {name:'Port Macquarie',region:'NSW',nights:1,from:'240 km ab Port Stephens',hi:'Koala Hospital (morgens!), Sea Acres Regenwald-Boardwalk — nur 1 Nacht, morgens Koala Hospital, dann weiter Coffs',
+   park:'NRMA Port Macquarie Breakwall Holiday Park',parkNote:'Strandnah, Pool & Spa, Spielplatz – 4,4★ mit fast 2.000 Bewertungen',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ66A21Cn_nWsR1FAbJ5Ms4Jk',
+   market:'Coles Port Macquarie (Hastings River Drive)',marketNote:'Großer Carpark, ideal für Wohnmobil',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJO5hw7CX_nWsRrvVn-j4Ypgs',
+   resto:null,restoNote:null,restoUrl:null,warn:null},
+  {name:'Coffs Harbour',region:'NSW',nights:2,from:'140 km',hi:'🍌 Big Banana — 351 Pacific Highway, Coffs Harbour NSW 2450 (kurzer Foto-/Themenpark-Stopp direkt an der Pacific Highway). 🌲 Sealy Lookout — Sealy Lookout Road, Korora NSW 2450 ("Forest Sky Pier"-Turm, Aussicht über Coffs Harbour + Baumwipfelpfad, kurzer Zwischenstopp). 🐨 Bongil Bongil NP — Trailhead Tuckers Rocks Carpark, Tuckers Rock Road, Bundagen NSW 2454 (Anfahrt: Old Pacific Highway bei Repton → Perrys Road → wird zu Tuckers Rock Road): Bluff Loop (2,25 km, leicht, 45–75 min, Koala-Chance, Picknickplatz, gleicher Trailhead) oder Bundageree Rainforest Walk (6 km Loop, 1,5–3 h – für die Kids eher über den Regenwald-Rückweg statt Strand). Park aktuell offen, keine Sperrungen.',
+   park:'Discovery Parks – Emerald Beach',parkNote:'✅ Gebucht (#J-7207884, 05.–07.08., 163,45 AUD/2 Nächte) — 73 Fishermans Drive, Emerald Beach NSW 2456, 12 min nördlich von Coffs Harbour, Strandzugang, großer Pool, Spielplatz',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ1TthFFn1m2sRgQLaxf9r_8k',
+   market:'Woolworths Park Beach Plaza',marketNote:'Massiver Carpark – einfach mit Wohnmobil',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJCehe7DUMnGsRBvYjDkW4aVE',
+   resto:'Pier Hotel Coffs Harbour',restoNote:'Pub-Meals direkt am Jetty, günstig, Kids willkommen',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ43x6zr4NnGsRN4zB9Z0ofNA',warn:null},
+  {name:'Byron Bay',region:'NSW',nights:4,from:'170 km',hi:'Cape Byron Lighthouse Walk, Minyon Falls, Strände — Feinplanung siehe Tagesplan-Tab',
+   park:'Discovery Parks – Byron Bay',parkNote:'✅ Gebucht (#J-7210376, 07.–11.08., 397,54 AUD/4 Nächte bezahlt) — 144 Bayshore Drive, Byron Bay NSW 2481, 2 km vom Zentrum, Waterpark, nahe Belongil Beach',
+   parkUrl:'https://www.google.com/maps/search/144+Bayshore+Drive+Byron+Bay+NSW+2481',
+   market:'Woolworths Byron Bay (Fletcher St)',marketNote:'Morgens früh einkaufen, sonst voll',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJm4-w8ThikGsRLL0NVIbRTg4',
+   resto:'Fish Heads Byron Bay (Jonson St)',restoNote:'Beste Fish & Chips im Ort, Außenbereich, kinderfreundlich',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJQYF1rTtikGsRhDVSIdly3cY',warn:null},
+  {name:'Gold Coast',region:'QLD',nights:2,from:'100 km',hi:'Springbrook NP: Purling Brook Falls & Natural Bridge, Lamington NP: Treetop Walk (Green Mountains/Oreillys)',
+   park:'Gold Coast Main Beach Campground',parkNote:'✅ Gebucht (11.–13.08., 91,94 €) — anderer Campground als ursprünglich geplant (NRMA Treasure Island). Keine 3. Nacht hier — nach dem O\'Reilly\'s-Tagesausflug am 13.08. weiter zum Donnybrook Caravan Park (Details siehe Tag 13).',
+   parkUrl:'https://www.google.com/maps/search/Gold+Coast+Main+Beach+Campground',
+   market:'Coles Upper Coomera',marketNote:'Großer Carpark, leicht zugänglich von der M1',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJLx0sPlYRkWsRpwjIg0w0Rmg',
+   resto:"Montezuma's (Surfers Paradise)",restoNote:'Mexikanisch, riesige Portionen, Kinderteller, Familien-Institution an der GC – Surfers Paradise',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ24lK2gwFkWsRZ0Wc8mTBbXw',warn:null},
+  {name:'Sunshine Coast (Mudjimba)',region:'QLD',nights:2,from:'80 km',hi:'Australia Zoo bereits am 14.08. ab Donnybrook erledigt (vorgezogen). Sonst Glass House Mountains Lookouts, optional Gardners Falls im Hinterland (Maleny, kleiner Umweg).',
+   park:'Mudjimba Beach Holiday Park',parkNote:'✅ Gebucht (#1037008, 14.–16.08., 294,00 AUD/2 Nächte komplett bezahlt) — Cottonwood Street, Mudjimba QLD 4564, Powered Caravan. Check-in ab 11:00 Uhr, Check-out vor 10:00 Uhr.',
+   parkUrl:'https://www.google.com/maps/search/Cottonwood+Street+Mudjimba+QLD+4564',
+   market:'Woolworths Chancellor Park',marketNote:'18 University Way, Sippy Downs — unterwegs von Australia Zoo aus, guter Carpark',
+   marketUrl:'https://www.google.com/maps/search/18+University+Way+Sippy+Downs+QLD+4556',
+   resto:null,restoNote:null,restoUrl:null,warn:null},
+  {name:'Rainbow Beach',region:'QLD',nights:3,from:'170 km',hi:"⭐ Carlo Sand Blow (Ersatz für gestrichene K'gari-Tour, 07.08.) — 600 m leichter Wanderweg zur Wanderdüne mit Blick über Wide Bay, kostenlos. Dazu Double Island Point (Tag 20) als zweiter freier Naturtag.",
+   park:'BIG4 Rainbow Beach Holiday Park',parkNote:'Pool, direkt im Ort, walkable zu allem',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJJXW86YGx7GsR2AMWb0JcSb0',
+   market:'⚠ Nur IGA Rainbow Beach (klein!)',marketNote:'Basisversorgung ok – kein Großeinkauf möglich',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJA6vKFl-x7GsRqbLSdV_vENc',
+   resto:'Rainbow Beach Hotel',restoNote:'Günstige Pub-Meals, Kinder willkommen',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ5_kQ7Vux7GsR1PbFj1l3G1w',
+   warn:"VORRÄTE AUFSTOCKEN in Noosa oder Gympie (60 km) vor Anreise – IGA zu klein für Wohnmobil-Vorräte!"},
+  {name:'Agnes Water / 1770',region:'QLD',nights:2,from:'280 km',hi:'Eurimbula NP, Ganoonga Noonga Lookout, Strand',
+   park:'NRMA Agnes Water Holiday Park',parkNote:'Direkt am Strand, Pool & Café, familiäre Atmosphäre – tolle Sunset-Stimmung',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJYbhFGVWF6WsR35dil0IVaxM',
+   market:'⚠ Nur IGA Agnes Water (sehr klein!)',marketNote:'Nur Basics erhältlich',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJxaxqiB2F6WsRLy9DCtJtV5E',
+   resto:'1770 Beach Shack',restoNote:'Fish & Chips am Wasser beim Sonnenuntergang – einer der besten Momente der Reise',
+   restoUrl:'https://www.google.com/maps/search/1770+Beach+Shack+Agnes+Water/@-24.167,151.878,15z',
+   warn:'VORRÄTE AUFSTOCKEN in Bundaberg (80 km südlich) oder Gladstone (100 km nördlich) – vor der Einfahrt!'},
+  {name:'Yeppoon / Rockhampton',region:'QLD',nights:2,from:'360 km / 4 h',hi:'Capricorn Caves, Strände der Capricorn Coast',
+   park:'Discovery Parks – Coolwaters Yeppoon',parkNote:'Wasserpark, BMX-Track, Pool, 3 min zum Strand – nach langem Fahrtag ideal',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJOwnO40HvwmsRu-tpnj3ynCo',
+   market:'Woolworths Yeppoon (Normanby St)',marketNote:'Guter Carpark, vollsortiert',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ2zxSjkzmwmsR1C6Cohex7bU',
+   resto:'Keppel Bay Sailing Club',restoNote:'Pub-Meals mit Wasserblick, Kinder willkommen, sehr günstig',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJMTUsszTmwmsR_lCugmVolrU',warn:null},
+  {name:'Eungella Nationalpark',region:'QLD',nights:2,from:'350 km / 4,5 h',hi:'Wilde Platypus an der Broken River Bridge, Finch Hatton Gorge; auf dem Rückweg nach Airlie Beach: Cape Hillsborough NP (Kängurus direkt am Strand, 30 km Abstecher ab Mackay)',
+   park:'Broken River Mountain Resort',parkNote:'Direkt am Platypus-Spot! Powered Sites + Pool – einzige gute Option im NP',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ6RADPoEO2msRxxBmW3u4j8Y',
+   market:'⚠ KEINE Supermärkte im NP! → Coles Mackay (50 km bergab)',marketNote:'Vor Auffahrt in den NP einkaufen',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJkfPRBvnT22sR05G5ZRVT2L0',
+   resto:'Broken River Mountain Resort Restaurant',restoNote:'Einzige Option im NP – überraschend gut, abends nach Platypus-Watching',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ6RADPoEO2msRxxBmW3u4j8Y',
+   warn:'VORRÄTE AUFSTOCKEN in Mackay (50 km vor dem NP) – Coles oder Woolworths City Centre!'},
+  {name:'Airlie Beach',region:'QLD',nights:3,from:'150 km',hi:'Whitsundays-Segeltour, Whitehaven Beach & Hardy Reef Schnorcheln',
+   park:'Discovery Parks Airlie Beach',parkNote:'Pool, 5 min zu Fuß zur Lagoon und in die Stadt – top Lage',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJUeX2uapK2GsR47XKUqyPpDs',
+   market:'Coles Whitsunday Shopping Centre',marketNote:'Direkt in der Stadt, guter Carpark',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ1xcLO9PK2WsRTmbhSy4nV2g',
+   resto:"Fish D'Vine (Shute Harbour Rd)",restoNote:'LEGENDÄR – preisgekrönte Fish & Chips & Prawns. Absolute Pflicht!',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ30Mh8UU12GsRurSpaM42ytI',warn:null},
+  {name:'Townsville',region:'QLD',nights:2,from:'280 km',hi:'Magnetic Island: Wilde Koalas & Felskängurus; The Strand Waterpark (KOSTENLOS! tägl. 10–20 Uhr, direkt am Meer — Kinder-Highlight)',
+   park:'Discovery Parks Townsville',parkNote:'Pool, gut gelegen, nahe The Strand',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJp1InZEJNFmsRRAsaxYkBkpQ',
+   market:'Woolworths Willows Shopping Centre',marketNote:'Riesiger Carpark, mühelos mit Wohnmobil',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJmTj6KpHw1WsRMdjO6m9YuT4',
+   resto:'Longboard Bar & Grill (The Strand)',restoNote:'Direkt am Strand, casual, Kinder-Menü, Aussicht auf Magnetic Island',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJFwu5gs_41WsRwZuSFNZPSFw',warn:null},
+  {name:'Mission Beach',region:'QLD',nights:0,from:'200 km',hi:'Nur kurzer Zwischenstopp, KEINE Übernachtung — Kasuar-Walk falls Zeit bleibt, dann direkt weiter nach Cairns (langer Fahrtag, 200+140=340 km gesamt). Dunk Island entfällt dadurch ersatzlos.',
+   park:'BIG4 Tasman Holiday Parks – South Mission Beach',parkNote:'Tropenparadies! Pool, Palmen, direkt am Strand – Kinder lieben es',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ4Y3B5uolf2kRoZLjQOnLdNM',
+   market:'Woolworths Mission Beach (Wongaling Beach)',marketNote:'vollsortiert, 5 min südlich des Parks',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJcYeyLUAvf2kRYj9wJuyFZWM',
+   resto:'Castaways Beach Bar & Grill',restoNote:'Beachfront casual, Seafood & Fish & Chips beim Sonnenuntergang',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ880tHdEuf2kRO1GDLPpR-O0',
+   warn:'VORRÄTE AUFSTOCKEN in Innisfail (30 km nördlich) oder Tully (30 km südlich)!'},
+  {name:'Cairns',region:'QLD',nights:5,from:'140 km',hi:'30.08. Ankunft (Fahrtag ab Townsville über Mission Beach, Durchfahrt) — 31.08./01.09. Puffertage — 02.09. Fitzroy Island (Fähre 8:00–17:00 Uhr, ersetzt Green Island) — 03.09. Daintree & Cape Tribulation Tagesausflug (via Port Douglas) — 04.09. Camper-Rückgabe bis 11:30 + Flug 13:30. Kuranda Skyrail entfällt weiterhin mangels Zeit.',
+   park:'BIG4 Ingenia Holidays Cairns Coconut',parkNote:'Pool, Wasserrutsche, Spielplatz – 4,6★ mit 2.700 Bewertungen, DER Familienpark in Cairns',
+   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJdaRuVsJjeGkR_v4BwAITVao',
+   market:'Coles Cairns Central Shopping Centre',marketNote:'Großer Carpark, letzter Großeinkauf vor Camper-Rückgabe',
+   marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJVVVV0ZZmeGkRmnrfCaEjxdY',
+   resto:'Prawn Star (Marlin Marina)',restoNote:'IKONISCH – schwimmendes Prawn-Boot am Hafen. Frische QLD-Garnelen knacken, Kinder flippen aus!',
+   restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJC1zr2PJmeGkRseLHIgk-U-4',warn:null},
+];
+
+const days=[
+  [1,'01.08. Sa','Caringbah → Lane Cove River','~49 km / 1 h','WoMo-Übernahme 09:30 → BCF + Woolworths Caringbah → IKEA Tempe (WoMo-Kleinkram, fast auf der Route) → Lane Cove NP einrichten, ersten Abend genießen'],
+  [2,'02.08. So','⚡ IST: Lane Cove → Budgewoi','–','Spontan eingefügter Zwischenstopp, stand nicht im Originalplan (NRMA Budgewoi Holiday Park, 57 AUD)'],
+  [3,'03.08. Mo','⚡ IST: Budgewoi → Port Stephens (One Mile Beach)','~230 km / 3 h','Nur noch 1 statt 2 Nächte — Sandboarding & Delfin-Cruise Nelson Bay (13:30 Uhr Moonshadow, gebucht)'],
+  [4,'04.08. Di','Port Stephens → Port Macquarie','240 km / 3 h','Anreise, Abendstrand — Datum unverändert zum Originalplan'],
+  [5,'05.08. Mi','Port Macquarie → Coffs Harbour','140 km / 2 h','Anreise, Check-in <a href="https://www.google.com/maps/place/?q=place_id:ChIJ1TthFFn1m2sRgQLaxf9r_8k" target="_blank" rel="noopener">Discovery Parks Emerald Beach</a> ✅ gebucht (#J-7207884, 163,45 AUD/2 Nächte). Nachmittags <a href="https://www.google.com/maps/search/351+Pacific+Highway+Coffs+Harbour+NSW+2450" target="_blank" rel="noopener">Big Banana</a> (351 Pacific Highway) + <a href="https://www.google.com/maps/search/Sealy+Lookout+Road+Korora+NSW+2450" target="_blank" rel="noopener">Sealy Lookout</a> (Sealy Lookout Road, Korora — Forest Sky Pier).'],
+  [6,'06.08. Do','Coffs Harbour','–','Eigener, entspannter Tag: <a href="https://www.google.com/maps/search/Tuckers+Rocks+Carpark+Tuckers+Rock+Road+Bundagen+NSW+2454" target="_blank" rel="noopener">Bongil Bongil NP</a> (Trailhead Tuckers Rocks Carpark) — Bluff Loop (2,25 km, leicht) oder Bundageree Rainforest Walk (6 km).'],
+  [7,'07.08. Fr','Coffs Harbour → Byron Bay','170 km / 2,5 h','Anreise, Check-in <a href="https://www.google.com/maps/search/144+Bayshore+Drive+Byron+Bay+NSW+2481" target="_blank" rel="noopener">Discovery Parks Byron Bay</a> (144 Bayshore Drive) ✅ gebucht #J-7210376, 397,54 AUD/4 Nächte bezahlt. Nachmittags <a href="https://www.google.com/maps/search/Suffolk+Park+Beach+NSW" target="_blank" rel="noopener">Suffolk Park Beach</a>, kurzer Weg von der Anfahrtsroute.'],
+  [8,'08.08. Sa','Byron Bay','–','<a href="https://www.google.com/maps/search/199+Lighthouse+Road+Byron+Bay+NSW+2481" target="_blank" rel="noopener">Cape Byron Lighthouse</a> (199 Lighthouse Road) — Leuchtturm-Führung + Lighthouse Walk (3,7 km Küstenwanderung, östlichster Punkt Australiens, kostenlos, Aug–Nov Walbeobachtung möglich). Danach <a href="https://www.google.com/maps/search/Wategos+Beach+Byron+Bay+NSW" target="_blank" rel="noopener">Wategos Beach</a> (geschützte Bucht direkt nördlich der Landzunge, ruhiges Wasser, gut für Kinder).'],
+  [9,'09.08. So','Byron Bay Hinterland','–','<a href="https://www.google.com/maps/search/Minyon+Falls+Picnic+Area+Nightcap+National+Park+NSW" target="_blank" rel="noopener">Minyon Falls</a>, Nightcap NP — Anfahrt über den Ost-Eingang via Rosebank/Minyon Drive (2WD, unbefestigt). ⚠ Nightcap Range Road (Süd-Zufahrt via Dunoon) ist wegen Erdrutsch seit 2022 gesperrt — betrifft NICHT die Anfahrt von Byron Bay aus. Kurzer barrierefreier Weg vom Parkplatz zum Aussichtspunkt, Picknicktische vor Ort.'],
+  [10,'10.08. Mo','Byron Bay','–','Freier Tag — Option A: <a href="https://www.google.com/maps/search/Belongil+Beach+Byron+Bay+NSW" target="_blank" rel="noopener">Belongil Beach</a> (fußläufig vom Campground) zum Entspannen, optional Bummel durch die Stadt (Jonson St). Option B: Tagesausflug <a href="https://www.google.com/maps/search/Iluka+Bluff+Bundjalung+National+Park+NSW" target="_blank" rel="noopener">Bundjalung NP / Iluka Bluff</a> (⚠ korrigiert: ~109 km / ~1h50–2h nördlich, nicht 45 Min. — echter Tagesausflug, kein kurzer Abstecher) — Iluka Rainforest Walk (2,6 km, leicht, 1,5 Std., Start Ecke Long/Crown St Iluka oder Iluka-Bluff-Parkplatz) zum Aussichtspunkt mit Picknick + Walbeobachtung (Winter-Rückwanderung). Kein Surfkurs (keiner will).'],
+  [11,'11.08. Di','Byron Bay → Gold Coast','100 km / 1,5 h','Unterwegs-Stopp: <a href="https://www.google.com/maps/search/29+Duranbah+Road+Duranbah+NSW+2487" target="_blank" rel="noopener">Tropical Fruit World</a> (29 Duranbah Road, Duranbah NSW) — liegt direkt an der Route, erkennbar am „Big Avocado". Farm-Tour mit Traktor durchs 215-Acre-Gelände + Frucht-Verkostung, ca. 2,5 Std., ≈ 46 AUD/Erwachsener, Kinder bis 4 Jahre frei. Danach weiter Richtung Gold Coast, Anreise + Burleigh Heads NP.'],
+  [12,'12.08. Mi','Gold Coast Hinterland','–','Springbrook NP — <a href="https://www.google.com/maps/search/Purling+Brook+Falls+Picnic+Area+Springbrook+NP" target="_blank" rel="noopener">Purling Brook Falls</a>: 4 km Rundweg (~2 Std.), führt hinter den Wasserfall. Danach <a href="https://www.google.com/maps/search/Natural+Bridge+Springbrook+National+Park" target="_blank" rel="noopener">Natural Bridge</a>: kostenlos, ~1 Std. Rundweg zu Felsbogen + Höhle (Baden im Bach seit Kurzem verboten, Glühwürmchen nur bei Nachtbesuch sichtbar — tagsüber trotzdem lohnend).'],
+  [13,'13.08. Do','Lamington NP (Green Mountains)','~1,5 h','⭐ Getauscht 10.08. (statt Burleigh Head NP/Strand — Kombination mit Springbrook an einem Tag nicht möglich, ~2h Fahrt dazwischen, siehe Highlights-Karte). Vormittags <a href="https://www.google.com/maps/search/Oreillys+Rainforest+Retreat+Lamington+National+Park+Road+Canungra" target="_blank" rel="noopener">Oreillys Rainforest Retreat</a> (Lamington National Park Road, Green Mountains): Treetop Walk direkt am Gelände — 180 m Hängebrücke, ca. 15 m über dem Regenwaldboden, kostenlos, keine Anmeldung nötig, „perfect for all ages" laut Betreiber, ca. 20–30 Min. inkl. Fotostopps. Für Mutige: Leiter an einem Würgefeigenbaum (Strangler Fig) führt noch höher hinauf.<br>Danach <a href="https://www.google.com/maps/search/Python+Rock+and+Morans+Falls+car+park+Lamington+National+Park+Road" target="_blank" rel="noopener">Python Rock & Morans Falls Trailhead</a> (eigener Parkplatz, ca. 900 m von Oreillys, beide Wege starten hier gemeinsam): <b>Morans Falls Lookout</b> — ruhiger, ebener Regenwaldweg, ca. 40–50 Min. hin und zurück, Aussichtspunkt mit freiem Blick auf den Wasserfall, keine technischen Schwierigkeiten. <b>Python Rock Lookout</b> — 3,1 km hin und zurück (~50 Min.), asphaltierter Weg mit gleichmäßiger Steigung, laut Nationalpark-Infos für Wander-Einsteiger geeignet, Aussicht über Castle Crag Richtung „Lost World" und Mount Throakban. Rückweg optional über den Centenary Track (900 m, ~10 Min.) als kleine Schleife.<br>Burleigh Head NP + Strandtag entfallen dafür an diesem Tag.<br>Übernachtung NICHT am Gold Coast Main Beach Campground (nur 2 Nächte gebucht) — stattdessen abends weiter zum <a href="https://www.google.com/maps/search/10+Alice+Street+Donnybrook+QLD" target="_blank" rel="noopener">Donnybrook Caravan Park</a> (10 Alice Street) ✅ gebucht (Buchungsnr. 171675, Powered Site Slab, 2 Erw. + 4 Kinder, Ankunft ca. 17:00, 92,65 AUD bezahlt, Check-out 10:00 am 14.08.).'],
+  [14,'14.08. Fr','Donnybrook → Australia Zoo → Mudjimba','–','Australia Zoo Tagesausflug, unterwegs Einkauf Woolworths Chancellor Park (Sippy Downs). Danach Check-in Mudjimba Beach Holiday Park ✅ gebucht (#1037008, 2 Nächte, 294 AUD bezahlt)'],
+  [15,'15.08. Sa','Mudjimba','–','Freier Tag Sunshine Coast — Glass House Mountains Lookouts, optional Gardners Falls (Maleny)'],
+  [16,'16.08. So','Mudjimba → Rainbow Beach','170 km / 2,5 h','Check-out Mudjimba, Anreise, Nachmittag Carlo Sand Blow (600 m Wanderweg, kostenlos)'],
+  [17,'17.08. Mo','Rainbow Beach','–','⭐ Ersatztag für gestrichene K\'gari-Tour: entspannter Vormittag im Ort, Nachmittag optional Coloured-Sands-Strandspaziergang (ab Surf Club Richtung Double Island Point, ca. 1 km bis zu den ersten Klippen mit den farbigen Sandschichten, danach beliebig weit)'],
+  [18,'18.08. Di','Rainbow Beach','–','Freier Strandtag, Double Island Point'],
+  [19,'19.08. Mi','Rainbow Beach → Agnes Water/1770','280 km / 3,5 h','Anreise'],
+  [20,'20.08. Do','Agnes Water / 1770','–','Eurimbula NP, Ganoonga Noonga Lookout, Strand'],
+  [21,'21.08. Fr','Agnes Water → Yeppoon','360 km / 4 h','Anreise via Rockhampton — langer Fahrtag, früh starten!'],
+  [22,'22.08. Sa','Yeppoon / Rockhampton','–','Capricorn Caves, Strände Capricorn Coast'],
+  [23,'23.08. So','Yeppoon → Eungella NP','350 km / 4,5 h','Anreise via Mackay — früh starten!'],
+  [24,'24.08. Mo','Eungella Nationalpark','–','Platypus-Watching Broken River, Finch Hatton Gorge'],
+  [25,'25.08. Di','Eungella → Airlie Beach','150 km / 2 h','Anreise'],
+  [26,'26.08. Mi','Airlie Beach','–','Whitsundays-Segeltour, Whitehaven Beach & Hardy Reef Schnorcheln'],
+  [27,'27.08. Do','Airlie Beach','–','Freier Tag: Conway NP, Lagoon'],
+  [28,'28.08. Fr','Airlie Beach → Townsville','280 km / 3,5 h','Anreise'],
+  [29,'29.08. Sa','Townsville','–','Magnetic Island: Koalas & Felskängurus'],
+  [30,'30.08. So','Townsville → Cairns (via Mission Beach)','340 km / ~5 h','Langer Fahrtag — kurzer Zwischenstopp Mission Beach (Kasuar-Walk falls Zeit), Übernachtung direkt in Cairns'],
+  [31,'31.08. Mo','Cairns','–','Puffertag'],
+  [32,'01.09. Di','Cairns','–','Puffertag'],
+  [33,'02.09. Mi','Cairns','–','Fitzroy Island (Fähre 8:00–17:00 Uhr) — ersetzt Green Island, mehr Regenwald & Wanderwege'],
+  [34,'03.09. Do','Cairns','–','Daintree & Cape Tribulation Tagesausflug (via Port Douglas)'],
+  [35,'04.09. Fr','Cairns','–','Camper-Rückgabe bis 11:30, Flug 13:30 nach Sydney'],
+  [36,'05.09. Sa (Original-Datum, im Alternativplan entfällt dieser Tag)','Cairns → Sydney','Flug','Original-Zeile, siehe Hinweis oben — Sydney-Tage unten bewusst unverändert gelassen, Datumsabgleich noch offen'],
+  [37,'06.09. So','Sydney','–','Blue Mountains: Three Sisters, Featherdale Wildlife Park'],
+  [38,'07.09. Mo','Sydney','–','Taronga Zoo & Sydney Harbour, Manly Beach'],
+  [39,'08.09. Di','Sydney','–','Bondi-Coastal-Walk, abends Abreise']
+];
+
+const activities=[
+  {title:'Green Island — Great Barrier Reef ab Cairns',tag:'must',price:'≈ € 280 (Familie)',dur:'Ganztags',warn:false,desc:'45 Min Fähre, flache Lagune, Glasbodenboot, Schnorcheln direkt vom Strand — das familienfreundlichste Riff-Erlebnis Australiens.',link:'https://www.greenisland.com.au/'},
+  {title:'Fitzroy Island (⭐ ALTERNATIVE zu Green Island im Cairns-Alternativplan)',tag:'must',price:'≈ € 230 (Familie, 2 Erw. + 4 Kinder à Kindertarif)',dur:'Ganztags',warn:false,desc:'45 Min Fähre ab Reef Fleet Terminal Cairns, Abfahrten 8:00/11:00/13:30 Uhr, Rückfahrten 9:30/12:15/17:00 Uhr. Mehr Regenwald & Wanderwege als Green Island (Secret Garden Walk, Nudey Beach, Aussichtspunkt-Wanderung), Riff-Schnorcheln direkt vom Strand. ⚠ Frühbucherpreis nur bei Buchung ≥72 h vorher — im Alternativplan bleibt kaum Vorlauf, ggf. Normalpreis (Adult 99 AUD / Kind 47,50 AUD) einplanen.',link:'https://www.fitzroyislandferry.com/'},
+  {title:'Daintree River Bootsfahrt & Cape Tribulation',tag:'must',price:'≈ € 180 (Familie)',dur:'Ganztag oder Halbtag',warn:false,desc:'Ältester Regenwald der Welt, Daintree River mit Krokodilen, Cape Trib Strand wo Regenwald auf Riff trifft. Halbtagstour ab Port Douglas oder Cairns.',link:'https://www.daintreerivertours.com.au/'},
+  {title:'Stockton Sanddünen: Sandboarding & Delfin-Cruise',tag:'must',price:'≈ € 130 (Familie)',dur:'4 h',warn:false,desc:'Größte Wanderdünen der Südhalbkugel, danach Delfin-Beobachtung ab Nelson Bay.',link:'https://www.portstephens4wd.com.au/'},
+  {title:'Cape Byron Lighthouse Walk',tag:'must',price:'kostenlos',dur:'2–3 h',warn:false,desc:'3,7 km Küstenwanderung zum östlichsten Punkt Australiens. Aug–Nov Walbeobachtung möglich.',link:'https://www.visitnsw.com/destinations/north-coast/byron-bay-area/byron-bay'},
+  {title:'Springbrook NP: Purling Brook Falls',tag:'must',price:'kostenlos',dur:'2–3 h',warn:false,desc:'Gondwana-Regenwald, Hängebrücke, familienfreundlicher Rundweg zum Wasserfall.',link:'https://www.queensland.com/us/en/places-to-see/experiences/nature-and-wildlife/springbrook-national-park'},
+  {title:'Australia Zoo, Sunshine Coast',tag:'nice',price:'≈ € 230 (Familie)',dur:'Tagesausflug',warn:false,desc:'Zoo der Familie Irwin mit Krokodil-Shows. Online buchen spart Geld.',link:'https://www.australiazoo.com.au/'},
+  {title:'Gardners Falls, Maleny (optionale Ergänzung Sunshine-Coast-Hinterland)',tag:'nice',price:'kostenlos',dur:'1–2 h',warn:false,desc:'250–300 m fast ebener Weg ab Parkplatz an der Obi Obi Creek zu mehreren Kaskaden. Flache Felsbecken direkt am Weg für kleine Kinder, größerer Pool unter dem Hauptwasserfall weiter flussabwärts zum Schwimmen. Ca. 30–40 Min Umweg von der Küste.',link:'https://www.visitsunshinecoast.com/attraction/5859db7b3e1871ba532ea6be/gardners-falls'},
+  {title:'Carlo Sand Blow, Rainbow Beach (⭐ ERSATZ für K\'gari, gestrichen 07.08.)',tag:'must',price:'kostenlos',dur:'1 h',warn:false,desc:'600 m leichter Wanderweg ab dem Carlo-Parkplatz durch Eukalyptuswald zu einer 15 Hektar großen Wanderdüne, Blick über Rainbow Beach, Wide Bay und die Cooloola-Küste. Grund für den Tausch: Standard-Miet-4WD ist auf K\'gari nicht erlaubt, nur teure geführte Touren (≈ € 590/Familie) oder separater lokaler 4WD-Verleih in Hervey Bay hätten funktioniert.',link:'https://parks.qld.gov.au/parks/cooloola/journeys/carlo-sandblow-walk'},
+  {title:'Coloured Sands Strandspaziergang, Rainbow Beach',tag:'nice',price:'kostenlos',dur:'1–2 h',warn:false,desc:'Strandwanderung ab dem Surf Club Richtung Double Island Point, nach ca. 1 km erste farbige Sandklippen (bis zu 190 Meter hoch, entstanden durch Mineral-Ablagerungen). Beliebig weit fortsetzbar, kein fester Endpunkt — gute Ergänzung zum freien Tag 19/20.',link:'https://parks.qld.gov.au/parks/cooloola/journeys/coloured-sands-beach-walk'},
+  {title:'Eungella NP: Wilde Platypus-Beobachtung',tag:'must',price:'kostenlos',dur:'1–2 h (früh/abends)',warn:false,desc:'Broken River Bridge gilt als verlässlichster Ort weltweit für Schnabeltiere in freier Wildbahn.',link:'https://www.ytravelblog.com/eungella-national-park-platypus/'},
+  {title:'Whitsundays-Segeltour zum Whitehaven Beach',tag:'must',price:'≈ € 700–900 (Familie)',dur:'Ganztags',warn:true,desc:'Segeltrip mit Schnorchel-Stopp am Hardy Reef. Mindestalter beim Anbieter vorab prüfen! ⚠ Feinsand auf Whitehaven Beach zerstört Kameralinsen, USB-Anschlüsse und Elektronik — Geräte in Schutzhülle lassen oder an Bord.',link:'https://sailing-whitsundays.com/article/whitehaven-beach-tours-for-families'},
+  {title:'Magnetic Island: Koalas & Felskängurus',tag:'must',price:'≈ € 110 (Fähre, Familie)',dur:'Tagesausflug',warn:false,desc:'Fähre ab Townsville, Wanderwege zu wilden Koalas und Allied Rock-Wallabies.',link:'https://www.queensland.com/us/en/places-to-see/experiences/islands/things-to-do-magnetic-island'},
+  {title:'Mission Beach: Kasuar-Walk & Dunk Island',tag:'must',price:'≈ € 160 (Wassertaxi, Familie)',dur:'Tagesausflug',warn:false,desc:'Regenwaldpfad mit hoher Kasuar-Sichtungsrate, Wassertaxi zur Insel mit Schnorchelbucht.',link:'https://dunkislandadventures.com.au/'},
+  {title:'Kuranda Skyrail & Scenic Railway',tag:'must',price:'≈ € 190 (Familie)',dur:'Halbtags',warn:false,desc:'Gondelfahrt über den Regenwald, Rückfahrt mit historischer Bahn durch den Barron Gorge.',link:'https://skyrail.com.au/plan/skyrail-kuranda-train/'},
+  {title:'Blue Mountains: Three Sisters & Featherdale',tag:'nice',price:'≈ € 250 (Tour, Familie)',dur:'Tagesausflug',warn:false,desc:'Echo Point, Scenic World, Koalas & Kängurus. Auch günstiger auf eigene Faust.',link:'https://www.visitnsw.com/destinations/blue-mountains'}
+];
+
+const climate=[
+  ['Sydney','17° / 8°','19° / 10°'],
+  ['Byron Bay / Gold Coast','22° / 12°','24° / 14°'],
+  ['Sunshine Coast','22° / 10°','25° / 13°'],
+  ['Whitsundays / Townsville','26° / 17°','28° / 19°'],
+  ['Cairns / Mission Beach','27° / 18°','29° / 20°']
+];
+
+const safety=[
+  {title:'Stinger-Saison',text:'August/September liegt außerhalb der Quallen-Saison (Nov–Mai). Baden an Stränden in QLD ist sicher — keine Stinger-Anzüge nötig.'},
+  {title:'Salzwasserkrokodile (ab Agnes Water nordwärts)',warn:true,text:'NICHT in Flüssen, Mündungen oder unbeschilderten Gewässern schwimmen. Nur an bewachten Ozeanstränden und Pools. Warnschilder ernst nehmen — auch für Kinder erklären!'},
+  {title:'Nachtfahrten VERMEIDEN — Versicherung!',warn:true,text:'Bei Dämmerung & nach Sonnenuntergang sind Kängurus, Wallabies und Wombats auf der Straße. MCA warnt explizit: Bei einem Nachtunfall kann der Versicherungsschutz <strong>erlöschen</strong>. Campingplatz vor Einbruch der Dunkelheit erreichen — Rezeptionen schließen oft ab 18–20 Uhr. Risikozeiten: 17–19 Uhr & 5–7 Uhr.'},
+  {title:'Caravan-Parks in den Ferien',text:'01.08.–08.09. = australische Winterferien. Powered Sites in Byron Bay, Gold Coast, Airlie Beach & Cairns früh reservieren (Wochen im Voraus!).'}
+];
+
+const practical=[
+  {title:'Apps fürs Wohnmobil',text:'WikiCamps Australia (Stellplätze), <a href="https://book.parks.qld.gov.au" target="_blank" rel="noopener" style="color:#4f7ef7">QPWS Camping buchen (book.parks.qld.gov.au)</a> — kein App nötig, läuft im Browser, Google Maps offline laden, BOM Weather für Wettervorhersagen.'},
+  {title:'Camping-Strategie mit Kindern',warn:true,text:'Powered Sites in Discovery Parks / NRMA Parks bevorzugen: Pool, Spielplatz, Klimaanlage, Strom. Besonders wichtig für Cairns, Townsville und Mission Beach (schwüle Nächte).'},
+  {title:'Reiseversicherung',warn:false,text:'✅ TravelSecure JRK Komfort Familie abgeschlossen (09.07.2026) — Reiserücktritt + Abbruch + AKV inkl. Krankenrücktransport + Gepäck bis €4.000. Kein AU–DE Sozialversicherungsabkommen kein Problem mehr.'},
+  {title:'Währung & Bezahlen',text:'Australischer Dollar (AUD). Karten überall akzeptiert. Trinkgeld nicht üblich. Großeinkäufe in Coles/Woolworths statt Tankstellen-Shops.'},
+  {title:'Linksverkehr & langen Fahrtagen',text:'In Wohngebieten 50 km/h, Landstraßen 100–110 km/h. Tage 23 & 25 sind lange Fahrtage (360 km / 350 km) — früh starten, Pausen planen.'},
+  {title:'Bordbatterie regelmäßig laden',warn:true,text:'Alle 2–3 Tage eine Powered Site buchen, um die Camper-Bordbatterie vollständig aufzuladen (Kühlschrank, Licht, Ladegeräte). Unpowered Sites schonen das Budget, aber auf längeren Strecken ohne Strom entlädt sich der Akku schnell.'},
+  {title:'Tanken im Inland',text:'Ab Eungella NP und auf Strecken ins Hinterland gilt: immer tanken sobald möglich. Zwischen Yeppoon, Eungella und Mackay können Tankstellen 80–100 km auseinanderliegen.'},
+  {title:'Offline-Medien für unterwegs',text:'Vor der Reise: Netflix-Folgen, Hörbücher und Kinderpodcasts für Gebiete ohne Mobilempfang herunterladen. Google Maps-Karten für NSW und QLD offline speichern (kostenlos, kein App-Kauf nötig).'},
+  {title:'Sonnenschutz das ganze Jahr',text:'UV-Index in QLD bleibt ganzjährig hoch. Sonnencreme LSF 50+, Hüte und viel Wasser — auch bei milden Temperaturen täglich eincremen.'},
+  {title:'Reiseapotheke',text:'Deutsche Kinderpräparate mitbringen: Ibuprofen-Saft, Fieberzäpfchen, Antihistaminikum, Pflaster, Wunddesinfektionsmittel. In AU verfügbar, aber andere Marken.'},
+  {title:'Noosa Heads (optionale Ergänzung)',text:'Zwischen Brisbane und Sunshine Coast: ruhige Lagune, Koalas im NP direkt am Strand, keine Wellen — ideal für die Kleinen. Falls ein Zwischenstopp möglich ist, lohnt sich Noosa sehr.'},
+  {title:'Gardners Falls, Maleny (optionale Ergänzung)',text:'Im Sunshine-Coast-Hinterland, ca. 30–40 Min ab der Küste (kleiner Umweg von Tag 16/17). Kurzer, fast ebener Weg ab Parkplatz an der Obi Obi Creek (250–300 m) zu mehreren Kaskaden. Erste, flache Felsbecken direkt am Weg eignen sich für kleinere Kinder zum Planschen, weiter flussabwärts wird der Hauptpool unter dem Wasserfall tiefer und eignet sich zum Schwimmen. Kostenlos, keine Buchung — guter Zwischenstopp, falls am 16./17.08. noch Zeit neben Glass House Mountains und Australia Zoo bleibt.'},
+  {title:'Keine Nachtfahrten',warn:true,text:'Vermieter-Empfehlung: <b>keine Fahrten nach Einbruch der Dunkelheit</b>. Kängurus und Wombats auf Straßen sind dämmerungs-/nachtaktiv — Kollision kann das Fahrzeug ernsthaft beschädigen. Alle Etappen so planen, dass ihr vor 17:00 Uhr am Stellplatz ankommt.'},
+  {title:'Mautstraßen Sydney & Brisbane',warn:true,text:'Sydney (M1, M5, Harbour Bridge/Tunnel) und Brisbane haben automatische Mautstellen — <b>kein Stopp, nur Kennzeichenerkennung</b>. CRUISIN rechnet Mautgebühren automatisch mit Tankkarte ab. Alternativ e-TAG vorab aktivieren. Ausweichrouten über Nationalstraßen sind möglich, aber deutlich langsamer.'},
+  {title:'⭐ ALTERNATIVPLAN Cairns-Finale (Stand 07.08.2026, aktualisiert — Daintree bleibt auf Florians Wunsch)',warn:true,text:'<b>Vorschlag:</b> Fitzroy Island (statt Green Island) am <b>02.09.</b>, Daintree & Cape Tribulation am <b>03.09.</b> (auf Florians Wunsch beibehalten, 07.08. aktualisiert — ursprünglich als Pufferrag geplant).<br><br><b>Tag für Tag im Vergleich:</b><br>• <b>01.09. (Di):</b> Original — Townsville → Mission Beach (200 km), Übernachtung vor Ort. Alternative — Townsville → Mission Beach → Cairns durchgefahren (200+140=340 km, langer Fahrtag), Übernachtung direkt in Cairns.<br>• <b>02.09. (Mi):</b> Original — Mission Beach vor Ort (Kasuar-Walk, Dunk Island). Alternative — Fitzroy-Island-Ganztagesausflug ab Cairns (Fähre Reef Fleet Terminal, Abfahrt 8:00 Uhr, Rückkehr 17:00 Uhr).<br>• <b>03.09. (Do):</b> Original — Mission Beach → Cairns (140 km), Camper-Rückgabe, Hotel-Check-in. Alternative — Daintree & Cape Tribulation Tagesausflug ab Cairns (Fahrt via Port Douglas, ca. 1 Std. je Richtung, Regenwald & Krokodil-Bootstour), Camper wird erst am Folgetag zurückgegeben.<br>• <b>04.09. (Fr):</b> Original — Cairns vor Ort (Green Island oder Daintree/Cape Trib), Camper schon abgegeben. Alternative — Camper-Rückgabe bis 11:30 Uhr, Flug 13:30 Uhr nach Sydney.<br><br><b>Was verloren geht:</b> Mission Beach als Übernachtungsort (nur kurzer Zwischenstopp am 01.09., Kasuar-Sichtung dabei unsicher), Dunk-Island-Wassertaxi entfällt ersatzlos, Kuranda Skyrail entfällt weiterhin mangels Zeit. Green Island wird gegen Fitzroy Island getauscht (kein reiner Verlust — Fitzroy bietet mehr Regenwald/Wanderwege, Green Island mehr offenes Riff). Der Pufferrag direkt vor der Camper-Rückgabe entfällt zwar (Daintree füllt jetzt den 03.09.) — als Trip-weiter Puffer dient stattdessen weiterhin Tag 19 (19.08., Rainbow Beach), der durch die K\'gari-Streichung bereits frei ist (Florians Entscheidung 07.08.: dieser Tag reicht als Ausweichmöglichkeit für die gesamte restliche Reise, kein zusätzlicher Puffer am Ende nötig).<br><b>Was gewonnen wird:</b> Daintree & Cape Tribulation bleiben im Programm (Fahrt führt automatisch an Port Douglas vorbei), zusätzlich Fitzroy Island statt Green Island.<br><br><b>Noch offen:</b> Sydney-Tage (05.–08.09.) sind unten bewusst unverändert gelassen — die Datumszählung ab 05.09. ist noch nicht mit dem Alternativplan abgeglichen (Original hat einen Cairns-Tag mehr, der hier wegfällt).'},
+  {title:'Baustellen NSW & QLD (Stand Jul. 2026)',warn:true,text:'6 größere Baustellen auf der Route aktiv: M1 Pacific Motorway (NSW), Woolgoolga–Ballina Freeway-Lückenschluss, Coffs Harbour Bypass (längste Baustelle!), Bruce Highway Upgrades (QLD), Sunshine Motorway, Cairns Ring Road. Wechselnde Sperren und Einspurstrecken möglich — Google Maps live nutzen, nicht offline-Routes vertrauen.'},
+  {title:'Visitor Centres nutzen',text:'An jedem Etappenziel gibt es einen <b>Visitor Information Centre</b> — hier gibt es kostenlose Karten, aktuelle Campinginfos, Parknews und lokale Geheimtipps. Lohnt sich immer als erster Stopp in einer neuen Region.'},
+  {title:'Zeitzone',text:'Die gesamte Route bleibt in <b>AEST (UTC+10)</b>: NSW und QLD haben im August/September die gleiche Zeit — kein Wechsel nötig. Queensland hat keine Sommerzeit, NSW auch nicht mehr im Winter. Uhren bleiben unverändert.'},
+  {title:'Pausen alle 2 Stunden',text:'CRUISIN empfiehlt: alle 2 Stunden eine kurze Pause einlegen — besonders wichtig bei langen Fahrtagen (Tag 23: 360 km, Tag 25: 350 km). Kinder brauchen Bewegung, und an der Ostküste gibt es immer einen interessanten Spot für eine kurze Pause.'}
+];
+
+// RENDER
+(function(){
+  // Übersicht
+  const maxB=Math.max(...budget.map(b=>b.eur));
+  const budgetBars=budget.map(b=>`<div class="barrow"><div class="barlabel"><span>${b.label}</span><b style="color:var(--txt)">€ ${b.eur.toLocaleString('de-DE')}</b></div><div class="bartrack"><div class="barfill" style="width:${Math.round(b.eur/maxB*100)}%;background:${b.color}"></div></div></div>`).join('');
+
+  const checkRows=checklist.map((c,i)=>`<tr><td style="width:28px;font-family:Fraunces,serif;font-weight:600;color:var(--nat)">${i+1}</td><td>${c.warn?`<span style="color:#fca5a5">⚠ ${c.text}</span>`:c.text}</td></tr>`).join('');
+
+  const hlCards=highlights.map(h=>`<div class="card"><i class="ti ${h.icon}" style="font-size:20px;color:var(--nat)"></i><div style="font-size:13px;font-weight:700;margin:8px 0 4px;font-family:Fraunces,serif">${h.title}</div><div style="font-size:11px;color:var(--mut)">${h.text}</div></div>`).join('');
+
+  const bestCards=bestpicks.map(b=>`<div class="card"><span class="pill pill-must">${b.cat}</span><div style="font-size:13px;font-weight:700;margin:8px 0 4px;font-family:Fraunces,serif">${b.pick}</div><div style="font-size:11px;color:var(--mut)">${b.note}</div></div>`).join('');
+
+  document.getElementById('tuebersicht').innerHTML=`
+    <div class="sec-title">Budget auf einen Blick</div>
+    <div class="card">${budgetBars}</div>
+    <div class="sec-title" style="margin-top:20px">Reise-Highlights</div>
+    <div class="grid3">${hlCards}</div>
+    <div class="sec-title" style="margin-top:20px">Best-Picks der Reise</div>
+    <div class="grid2">${bestCards}</div>
+    <div class="sec-title" style="margin-top:20px">Versicherungsschutz</div>
+    <div class="card" style="font-size:12px;border-color:rgba(16,185,129,.4)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span class="pill pill-must">✅ Abgeschlossen</span>
+        <span style="font-family:Fraunces,serif;font-size:14px;font-weight:700">TravelSecure JRK Komfort Familie · 09.07.2026</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px;margin-bottom:10px">
+        <div><span style="color:var(--mut)">Reiserücktritt</span><br><strong style="color:#10b981">✅ versichert</strong></div>
+        <div><span style="color:var(--mut)">Reiseabbruch</span><br><strong style="color:#10b981">✅ versichert</strong></div>
+        <div><span style="color:var(--mut)">Auslandskranken (AKV)</span><br><strong style="color:#10b981">✅ inkl. Rücktransport</strong></div>
+        <div><span style="color:var(--mut)">Gepäck</span><br><strong>bis €4.000 (SB €150)</strong></div>
+        <div><span style="color:var(--mut)">Kinder</span><br><strong>alle 4 mitversichert</strong></div>
+        <div><span style="color:var(--mut)">Gültigkeit</span><br><strong>Jahresschutz 2026</strong></div>
+      </div>
+      <a href="https://www.travelsecure.de/bedingungen/PI_JRK_Komfort.pdf" target="_blank" rel="noopener" class="lbtn" style="display:inline-flex;align-items:center;gap:6px">Versicherungsbedingungen (PDF) <i class="ti ti-external-link"></i></a>
+    </div>
+    <div class="sec-title" style="margin-top:20px">Buchungs-Checkliste</div>
+    <div class="card"><table><tbody>${checkRows}</tbody></table></div>`;
+  stagger('#tuebersicht .card');
+
+  // Etappen
+  const mlink=(url,label)=>`<a href="${url}" target="_blank" rel="noopener" style="color:#e2e8f0;font-weight:600;text-decoration:none;border-bottom:1px dotted #4f7ef7">${label}</a>`;
+  const stopList=stops.map((s,i)=>{
+    const warnHtml=s.warn?`<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:5px;padding:5px 8px;font-size:10px;color:#fca5a5;margin-top:7px">⚠ ${s.warn}</div>`:'';
+    const restoHtml=s.resto?`<div style="display:flex;gap:6px;margin-top:5px;font-size:11px;align-items:flex-start"><span>🍟</span><span>${mlink(s.restoUrl,s.resto)} — ${s.restoNote}</span></div>`:'';
+    return `<div class="card stop">
+      <div class="stopnum">${i+1}</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:4px">
+          <div style="font-family:Fraunces,serif;font-size:15px;font-weight:600">${s.name}</div>
+          <span class="pill pill-region">${s.region} · ${s.nights} Nächte</span>
+        </div>
+        <div style="font-size:11px;color:var(--mut);margin-bottom:6px">Anfahrt: ${s.from}</div>
+        <div style="font-size:12px;margin-bottom:8px">${s.hi}</div>
+        <div style="border-top:1px solid var(--brd);padding-top:7px;display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;gap:6px;font-size:11px;align-items:flex-start"><span>🏕</span><span>${mlink(s.parkUrl,s.park)} — ${s.parkNote}</span></div>
+          <div style="display:flex;gap:6px;font-size:11px;align-items:flex-start"><span>🛒</span><span>${mlink(s.marketUrl,s.market)} — ${s.marketNote}</span></div>
+          ${restoHtml}
+        </div>
+        ${warnHtml}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('tetappen').innerHTML=`
+    <div class="sec-title">16 Etappen · 34 Camper-Nächte</div>
+    <div class="info">ℹ Tage 23 & 25 sind lange Fahrtage (360 km / 350 km) — früh starten. Rote ⚠-Etappen: Vorräte vorher aufstocken!</div>
+    <div style="display:flex;flex-direction:column;gap:8px">${stopList}</div>`;
+  stagger('#tetappen .card');
+
+  // Tagesplan
+  const dayRows=days.map(d=>{
+    const isLong=d[3].includes('4 h')||d[3].includes('4,5 h');
+    return `<tr><td>${d[0]}</td><td style="white-space:nowrap">${d[1]}</td><td>${d[2]}</td><td style="${isLong?'color:#fca5a5;font-weight:600':''}">${d[3]}</td><td>${d[4]}</td></tr>`;
+  }).join('');
+
+  document.getElementById('ttagesplan').innerHTML=`
+    <div class="sec-title">39 Tage · 01.08. – 08.09.2026</div>
+    <div class="info" style="margin-bottom:10px">Lange Fahrtage (rot markiert) bitte früh starten. Powered Sites in Caravan Parks für Etappen mit Kindern bevorzugen.</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Tag</th><th>Datum</th><th>Ort / Etappe</th><th>Strecke</th><th>Highlight</th></tr></thead><tbody>${dayRows}</tbody></table></div>`;
+
+  // Highlights
+  const actCards=activities.map(a=>`<div class="card">${a.warn?'<div class="alert" style="margin-bottom:8px;padding:6px 10px;font-size:11px">⚠ Altersfreigabe vorab beim Anbieter prüfen!</div>':''}<span class="pill ${a.tag==='must'?'pill-must':'pill-nice'}">${a.tag==='must'?'Must-Do':'Nice-to-Have'}</span><div style="font-family:Fraunces,serif;font-size:14px;font-weight:600;margin:8px 0 4px">${a.title}</div><div style="font-size:12px;margin-bottom:6px">${a.desc}</div><div style="font-size:11px;color:var(--mut)">${a.price} · ${a.dur}</div><a class="lbtn" href="${a.link}" target="_blank" rel="noopener">Mehr erfahren <i class="ti ti-external-link"></i></a></div>`).join('');
+
+  document.getElementById('thighlights').innerHTML=`
+    <div class="sec-title">Top-Naturerlebnisse entlang der Route</div>
+    <div class="info">Neu: Green Island (Riff-Trip) und Daintree & Cape Tribulation als Must-Dos ergänzt.</div>
+    <div class="grid2">${actCards}</div>`;
+  stagger('#thighlights .card');
+
+  // Budget
+  const budRows=budget.map(b=>`<tr><td>${b.label}</td><td style="text-align:right">€ ${b.eur.toLocaleString('de-DE')}</td><td style="text-align:right">AUD ${b.aud.toLocaleString('de-DE')}</td></tr>`).join('');
+
+  document.getElementById('tbudget').innerHTML=`
+    <div class="sec-title">Kostenaufstellung (zusätzlich zu Flug, Hotels & Camper)</div>
+    <div class="card"><table><thead><tr><th>Posten</th><th style="text-align:right">ca. €</th><th style="text-align:right">ca. AUD</th></tr></thead><tbody>${budRows}</tbody></table></div>
+    <div class="total-bar"><span>Gesamt zusätzlich</span><span class="total-num">≈ € 8.000</span></div>
+
+    <div class="sec-title" style="margin-top:20px">Reisekasse — live (Belege per KI-Scan)</div>
+    <div class="card" id="live-budget-card"><div style="font-size:12px;color:#8b91a3">Lade…</div></div>
+
+    <div class="sec-title" style="margin-top:20px">Beleg hochladen &amp; scannen</div>
+    <div class="card">
+      <input type="file" id="beleg-file" accept="image/*,application/pdf" style="font-size:12px;margin-bottom:8px">
+      <button onclick="uploadBeleg()" style="background:#4f7ef7;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">Hochladen &amp; scannen</button>
+      <div id="beleg-scan-result" style="margin-top:12px"></div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Sparoptionen</div>
+    <div class="card"><ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.9">
+      <li>Frühbucher-Rabatt für die Whitsundays-Segeltour online sichern (10–15% günstiger) — K'gari-Tour entfällt seit 07.08. ersatzlos (kostenlose Carlo-Sand-Blow-Wanderung stattdessen, spart ≈ € 590/Familie).</li>
+      <li>Whitsundays-Segeltour: Halbtages- statt Ganztagestour spart ca. AUD 100–200 pro Erwachsenem.</li>
+      <li>Australia Zoo & Blue Mountains auf eigene Faust statt Gruppentour spart ca. € 150–200.</li>
+      <li>Selbst kochen: Caravan-Park-Küchen/BBQs meist kostenlos — Großeinkauf in Coles/Woolworths.</li>
+      <li>Nationalparks in QLD eintrittsfrei — Camping über <a href="https://book.parks.qld.gov.au" target="_blank" rel="noopener" style="color:#4f7ef7">book.parks.qld.gov.au</a> reservieren (kein App nötig).</li>
+      <li>Green Island: Früh-Fähre (7:30 Uhr) ist günstiger als Mittags-Option.</li>
+    </ul></div>`;
+  stagger('#tbudget .card');
+  loadLiveBudget();
+
+  // Tipps
+  const climateRows=climate.map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td></tr>`).join('');
+  const safetyCards=safety.map(s=>`<div class="card">${s.warn?'<span class="pill pill-warn" style="margin-bottom:6px;display:inline-block">Wichtig</span><br>':''}<div style="font-family:Fraunces,serif;font-size:14px;font-weight:600;margin-bottom:4px">${s.title}</div><div style="font-size:12px">${s.text}</div></div>`).join('');
+  const practicalCards=practical.map(p=>`<div class="card">${p.warn?'<span class="pill pill-warn" style="margin-bottom:6px;display:inline-block">Wichtig</span><br>':''}<div style="font-family:Fraunces,serif;font-size:14px;font-weight:600;margin-bottom:4px">${p.title}</div><div style="font-size:12px">${p.text}</div></div>`).join('');
+
+  document.getElementById('ttipps').innerHTML=`
+    <div class="sec-title">Klima im August/September (Tag / Nacht, ca. °C)</div>
+    <div class="card"><table><thead><tr><th>Region</th><th>August</th><th>September</th></tr></thead><tbody>${climateRows}</tbody></table></div>
+    <div class="sec-title" style="margin-top:20px">Sicherheit & Baden</div>
+    <div class="grid2">${safetyCards}</div>
+    <div class="sec-title" style="margin-top:20px">Praktisches</div>
+    <div class="grid2">${practicalCards}</div>`;
+  stagger('#ttipps .card');
+
+  // Camper
+  document.getElementById('tcamper').innerHTML=`
+    <div class="sec-title">Buchungsbestätigung · CRUISIN Motorhomes</div>
+    <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;font-size:12px">
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Vermieter</div>
+        <div style="font-weight:600">CRUISIN Motorhomes Pty. Ltd.</div>
+      </div>
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Fahrzeug</div>
+        <div style="font-weight:600">6-Berth Discovery Camper (Adventurer)</div>
+      </div>
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Confirmation No.</div>
+        <div style="font-weight:600">260460</div>
+      </div>
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Agency Ref.</div>
+        <div style="font-weight:600">03242</div>
+      </div>
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Passagiere</div>
+        <div style="font-weight:600">6 Personen</div>
+      </div>
+      <div>
+        <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Kilometer</div>
+        <div style="font-weight:600">Unlimited km</div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Pick-up & Drop-off</div>
+    <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;font-size:12px">
+      <div>
+        <span class="pill pill-must" style="margin-bottom:8px;display:inline-block">Pick-up</span>
+        <div style="font-weight:700;font-size:13px;margin-bottom:4px">Sa. 01.08.2026, ab 09:30 Uhr</div>
+        <div style="color:var(--mut)">CRUISIN Sydney</div>
+        <div>10 Wurrook Circuit</div>
+        <div>Caringbah, NSW</div>
+        <div style="margin-top:6px;font-size:11px;color:#fca5a5">⚠ Alle Fahrer müssen anwesend sein.<br>Alle Führerscheine müssen auf Englisch sein.</div>
+      </div>
+      <div>
+        <span class="pill pill-region" style="margin-bottom:8px;display:inline-block;background:rgba(6,182,212,.15);color:#06b6d4">Drop-off</span>
+        <div style="font-weight:700;font-size:13px;margin-bottom:4px">Fr. 04.09.2026, bis 15:30 Uhr</div>
+        <div style="color:var(--mut)">CRUISIN Cairns</div>
+        <div>397–399 Sheridan Street</div>
+        <div>Cairns, QLD</div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Versicherung & Zahlung</div>
+    <div class="card" style="font-size:12px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--brd)">
+        <span>Versicherungspaket</span>
+        <span style="font-weight:700;color:#10b981">Maximum Cover Package ✅</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--brd)">
+        <span>Kaution (Bond)</span>
+        <span style="font-weight:700;color:#10b981">AUD 0 ✅</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--brd)">
+        <span>Windschutzscheiben-/Reifendeckung</span>
+        <span style="font-weight:700;color:#10b981">Inklusive ✅</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:8px 10px;margin:4px -2px">
+        <span style="font-weight:600">⚠ Noch zu zahlen bei Pick-up</span>
+        <span style="font-weight:700;color:#fca5a5;font-size:15px">AUD 165,00</span>
+      </div>
+      <div style="font-size:11px;color:var(--mut)">One-Way Fee · Zahlung per Kreditkarte bei Abholung</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Inklusivleistungen</div>
+    <div class="card"><ul style="margin:0;padding-left:18px;font-size:12px;line-height:2">
+      <li>Navigationssystem</li>
+      <li>Gas/LPG</li>
+      <li>Campingstühle</li>
+      <li>1 Kleinkind-Kindersitz</li>
+      <li>2 Kindersitze (4–7 Jahre)</li>
+    </ul></div>
+
+    <div class="sec-title" style="margin-top:20px">Express Check-in & Kontakt</div>
+    <div class="card" style="font-size:12px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span>Online Check-in</span>
+        <span style="font-weight:700;color:#f59e0b">🔄 Begonnen</span>
+      </div>
+      <div style="padding-top:8px;border-top:1px solid var(--brd)">
+        <div style="margin-bottom:4px"><a href="tel:1300664485" style="color:#4f7ef7">📞 1300 664 485</a> (AU Inland)</div>
+        <div style="margin-bottom:4px"><a href="tel:+61362484789" style="color:#4f7ef7">📞 +61 3 6248 4789</a> (International)</div>
+        <div><a href="mailto:reservations@cruisinmotorhomes.com.au" style="color:#4f7ef7">✉ reservations@cruisinmotorhomes.com.au</a></div>
+      </div>
+    </div>`;
+  stagger('#tcamper .card');
+
+  // Flüge
+  const flugSeats = [
+    {name:'Florian', s1:'24A', s2:'25C', s3:'30B', s4:'33A'},
+    {name:'Laura',   s1:'24D', s2:'25D', s3:'31B', s4:'33D'},
+    {name:'Erik',    s1:'24B', s2:'26K', s3:'30C', s4:'33B'},
+    {name:'Ida',     s1:'24C', s2:'25A', s3:'31C', s4:'33C'},
+    {name:'Anton',   s1:'24E', s2:'25E', s3:'30A', s4:'33E'},
+    {name:'Lene',    s1:'24F', s2:'23B', s3:'31A', s4:'33F'},
+  ];
+  const seatRows = flugSeats.map(s=>`<tr><td style="padding:5px 8px">${s.name}</td><td style="text-align:center;padding:5px 8px;font-weight:600">${s.s1}</td><td style="text-align:center;padding:5px 8px;font-weight:600;color:#10b981">${s.s2}</td><td style="text-align:center;padding:5px 8px;font-weight:600;color:#10b981">${s.s3}</td><td style="text-align:center;padding:5px 8px;font-weight:600">${s.s4}</td></tr>`).join('');
+
+  document.getElementById('tflug').innerHTML=`
+    <div class="sec-title">Turkish Airlines · Reservierungscode: <span style="color:#4f7ef7;letter-spacing:.08em">U3882Y</span></div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="pill pill-must" style="font-size:11px">Hinflug</span>
+        <span style="font-family:Fraunces,serif;font-size:15px;font-weight:700">Stuttgart → Sydney</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--mut)">Do. 30.07.2026</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-bottom:12px">
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">① STR → Istanbul</div>
+          <div style="font-weight:700">TK 1710</div>
+          <div>Abflug 07:00 Stuttgart</div>
+        </div>
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">② Istanbul → Sydney</div>
+          <div style="font-weight:700">TK 174</div>
+          <div>Ankunft 19:10 Sydney <span style="color:#f59e0b">(31.07.)</span></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--mut);margin-bottom:4px">Economy (S) · Reisedauer 1 Tag 4h 10min (inkl. Tankstopp Kuala Lumpur, gleiche Flugnummer TK174)</div>
+    </div>
+
+    <div class="card" style="margin-top:0;background:rgba(79,126,247,.06)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span class="pill pill-must" style="font-size:11px;background:rgba(79,126,247,.15);color:#4f7ef7">Umstieg IST</span>
+        <span style="font-family:Fraunces,serif;font-size:14px;font-weight:700">Kids-Spielbereiche Istanbul Airport</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--mut)">~4h50 Umsteigezeit (11:00–15:50)</span>
+      </div>
+      <div style="font-size:12px;line-height:1.6;margin-bottom:8px">
+        Alles kostenlos, airside (kein erneuter Sicherheitscheck nötig):
+        <br>🚀 <strong>Cigaland Space</strong> (Gate A6) — interaktive Weltraum-Spiele
+        <br>🐠 <strong>Cigaland Sea</strong> (Gate B4) — Klettern + Rutsche, jüngere Kinder
+        <br>✈️ <strong>Cigaland Sky</strong> (Gate D2) — Flugzeugthema, Rutschen, Trampoline
+        <br>❄️ <strong>Cigaland Ice</strong> (Gate F9) — Klettergerüst, jüngere Kinder
+        <br>🕹️ <strong>Playland</strong> (ggü. Sleep Pods) — Arcade-Automaten
+      </div>
+      <div style="font-size:11px;color:var(--mut)">Außerdem: kostenloser Buggy-Verleih, Baby-Care-Räume, Family-Priority-Spur an der Sicherheitskontrolle · <a href="https://www.istairport.com/en/services/discover/child-and-family-friendly-airport/child-and-family-friendly-airport/childrens-playgrounds?locale=de" target="_blank" style="color:#4f7ef7">Offizielle Übersicht (istairport.com)</a></div>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="pill pill-region" style="font-size:11px;background:rgba(6,182,212,.15);color:#06b6d4">Rückflug</span>
+        <span style="font-family:Fraunces,serif;font-size:15px;font-weight:700">Sydney → Stuttgart</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--mut)">Di. 08.09.2026</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-bottom:12px">
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">③ Sydney → Istanbul</div>
+          <div style="font-weight:700">TK 175</div>
+          <div>Abflug 21:05 Sydney</div>
+        </div>
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">④ Istanbul → Stuttgart</div>
+          <div style="font-weight:700">TK 1705</div>
+          <div>Abflug 15:50 IST · Ankunft 17:40 STR <span style="color:#f59e0b">(09.09.)</span></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--mut);margin-bottom:4px">Economy (O) · Reisedauer 1 Tag 4h 35min</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Sitzplatzbelegung · alle 4 Segmente</div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table style="font-size:12px;width:100%">
+          <thead><tr>
+            <th style="text-align:left;padding:5px 8px">Passagier</th>
+            <th style="text-align:center;padding:5px 8px">① STR–IST</th>
+            <th style="text-align:center;padding:5px 8px;color:#10b981">② IST–SYD</th>
+            <th style="text-align:center;padding:5px 8px;color:#10b981">③ SYD–IST</th>
+            <th style="text-align:center;padding:5px 8px">④ IST–STR</th>
+          </tr></thead>
+          <tbody>${seatRows}</tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--mut);margin-top:8px">Grün = bezahlte Sitzauswahl IST↔SYD (EUR 624 gesamt). STR↔IST kostenlos zugewiesen.</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Gepäck & Status</div>
+    <div class="card" style="font-size:12px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between"><span>Freigepäck pro Person (alle Flüge)</span><span style="color:#10b981;font-weight:600">30 kg ✅</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--brd)"><span>Gesamtkapazität (6 Pers.)</span><span style="font-weight:600">180 kg je Richtung</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--brd)"><span>Sitzplatzauswahl IST↔SYD</span><span style="color:#10b981;font-weight:600">EUR 624,00 ✅</span></div>
+      <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--brd)"><span>Ticketnummern</span><span style="color:var(--mut)">2352299984164–169</span></div>
+        <div style="padding-top:6px;border-top:1px solid var(--brd);color:#fca5a5;font-size:11px">
+        ⚠ Abflug STR am <strong>30.07.</strong> (nicht 01.08.) — Sydney-Übernachtung nötig vor Camper-Abholung 01.08.
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Hotels</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span class="pill pill-must" style="font-size:11px">Anreise</span>
+        <span style="font-family:Fraunces,serif;font-size:14px;font-weight:700">Moxy Sydney Airport</span>
+        <span style="margin-left:auto;font-weight:700;color:#10b981">€ 271</span>
+      </div>
+      <div style="font-size:12px;color:var(--mut);margin-bottom:4px">31. Juli – 1. August 2026 · 1 Nacht · Kostenlose Stornierung</div>
+      <span style="font-size:11px;font-weight:600;color:#10b981">✅ Bestätigt</span>
+    </div>
+    <div class="card" style="margin-top:0">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span class="pill pill-region" style="font-size:11px;background:rgba(6,182,212,.15);color:#06b6d4">Abreise</span>
+        <span style="font-family:Fraunces,serif;font-size:14px;font-weight:700">Moxy Sydney Airport</span>
+        <span style="margin-left:auto;font-weight:700;color:#10b981">€ 1.067</span>
+      </div>
+      <div style="font-size:12px;color:var(--mut);margin-bottom:4px">4. – 8. September 2026 · 4 Nächte · Kostenlose Stornierung</div>
+      <span style="font-size:11px;font-weight:600;color:#10b981">✅ Bestätigt</span>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Parkplatz STR · ParkMundo Valet</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="pill pill-must" style="font-size:11px">Valet Service</span>
+        <span style="font-family:Fraunces,serif;font-size:15px;font-weight:700">Stuttgart Flughafen Parker</span>
+        <span style="margin-left:auto;font-weight:700;color:#10b981">€ 279,98 ✅</span>
+      </div>
+      <div style="font-size:12px;color:var(--mut);margin-bottom:10px">Reservierung <strong style="color:var(--txt)">PM7214564368</strong> · Terminal 2+3, Abflugebene (Kiss &amp; Fly) · Mercedes V250, LB-EN 321</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:12px">
+        <div style="padding:10px;background:rgba(16,185,129,.06);border-radius:8px">
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Abgabe · 30.07. 04:00</div>
+          <div style="font-weight:600;margin-bottom:3px">Flug TK1710 (07:00)</div>
+          <div style="color:var(--mut)">20 Min vorher anrufen:</div>
+          <div style="font-weight:700;color:#10b981">0173-1604589</div>
+          <div style="font-size:10px;color:var(--mut);margin-top:2px">Backup: 0172-4687155</div>
+        </div>
+        <div style="padding:10px;background:rgba(6,182,212,.06);border-radius:8px">
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Abholung · 09.09. 18:00</div>
+          <div style="font-weight:600;margin-bottom:3px">Flug TK1705 (17:40 Ankunft)</div>
+          <div style="color:var(--mut)">bis 20 Uhr → Ankunftsebene</div>
+          <div style="color:var(--mut)">nach 20 Uhr → Abflugebene</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--mut)">Überdacht · P10 Parkhaus · Fahrzeugrückgabe direkt am Terminal. Smart Flex = kostenlose Stornierung bis 24h vorher.</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Inlandsflug · Jetstar JQ959</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span class="pill pill-must" style="font-size:11px;background:rgba(249,115,22,.15);color:#f97316">Inlandsflug</span>
+        <span style="font-family:Fraunces,serif;font-size:14px;font-weight:700">Cairns → Sydney</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--mut)">Fr. 04.09.2026</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-bottom:12px">
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Abflug</div>
+          <div style="font-weight:700;font-size:15px">13:30</div>
+          <div>Cairns Domestic Terminal</div>
+        </div>
+        <div>
+          <div style="color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Ankunft</div>
+          <div style="font-weight:700;font-size:15px">16:25</div>
+          <div>Sydney Airport T2</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--mut);margin-bottom:10px">Airbus A320 · 2h 55min · Fare: Starter Plus · Booking ref: <strong>FPK4VT</strong> · AUD 1.151,96</div>
+      <div style="font-size:11px;color:var(--mut);margin-bottom:6px">Sitzplätze & Gepäck (7kg + 20kg je Person)</div>
+      <table style="font-size:12px;width:100%">
+        <thead><tr><th style="text-align:left;padding:4px 8px">Passagier</th><th style="text-align:center;padding:4px 8px">Sitz</th><th style="text-align:center;padding:4px 8px">Gepäck</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:4px 8px">Florian</td><td style="text-align:center;padding:4px 8px;font-weight:600">7D</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+          <tr><td style="padding:4px 8px">Laura</td><td style="text-align:center;padding:4px 8px;font-weight:600">8D</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+          <tr><td style="padding:4px 8px">Erik</td><td style="text-align:center;padding:4px 8px;font-weight:600">7E</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+          <tr><td style="padding:4px 8px">Ida</td><td style="text-align:center;padding:4px 8px;font-weight:600">7F</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+          <tr><td style="padding:4px 8px">Anton</td><td style="text-align:center;padding:4px 8px;font-weight:600">8E</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+          <tr><td style="padding:4px 8px">Lene</td><td style="text-align:center;padding:4px 8px;font-weight:600">8F</td><td style="text-align:center;padding:4px 8px;font-size:11px;color:var(--mut)">7+20 kg</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;padding:8px 10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;font-size:11px;color:#fca5a5">
+        ⚠ <strong>Wichtig 04.09.:</strong> Camper-Rückgabe bis 15:30 erlaubt, aber Jetstar-Abflug 13:30 — Camper muss bis spätestens ~11:30 zurück sein!
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Reise-Zeitplan · Vollständigkeitscheck</div>
+    <div class="card" style="font-size:12px">
+      <table style="width:100%">
+        <tbody>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">30.07. Do</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> 03:40 Valet anrufen (0173-1604589) · 04:00 Auto-Abgabe STR · TK1710 07:00 → Istanbul</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">31.07. Fr</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Ankunft Sydney 19:10 · TK174 → <strong>Moxy Hotel</strong> (1 Nacht)</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">01.08. Sa</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Camper Pick-up CRUISIN Caringbah ab 09:30</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">01.08.–03.09.</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> 34 Camper-Nächte · Sydney → Cairns</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">03.09. Do</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Letzter Campingtag · Abends in Cairns ankommen & einpacken</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">04.09. Fr</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Camper-Rückgabe Cairns vormittags → ~12:00 Flughafen → JQ959 13:30 → SYD 16:25</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">04.–08.09.</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> <strong>Moxy Hotel Sydney</strong> · 4 Nächte</td></tr>
+          <tr style="border-bottom:1px solid var(--brd)"><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">08.09. Di</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Abflug SYD 21:05 · TK175 → Istanbul</td></tr>
+          <tr><td style="padding:7px 8px;white-space:nowrap;color:var(--mut)">09.09. Mi</td><td style="padding:7px 8px"><span style="color:#10b981;font-weight:600">✅</span> Ankunft Stuttgart 17:40 · TK1705 · Auto-Abholung Ankunftsebene STR (bis 20 Uhr)</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;padding:8px 10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:6px;font-size:11px;color:#10b981;font-weight:600">
+        ✅ Kein einziger Tag ungedeckt — alle 41 Reisetage vollständig abgesichert
+      </div>
+    </div>`;
+  stagger('#tflug .card');
+
+  // Versicherung
+  document.getElementById('tversicherung').innerHTML=`
+    <div class="alert" style="font-size:13px;background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.4);color:#10b981">✅ <strong>TravelSecure JRK Komfort Familie abgeschlossen (09.07.2026)</strong> — Vollständiger Versicherungsschutz für Australien. Alle offenen Punkte erledigt.</div>
+
+    <div class="sec-title">Abgeschlossene Police</div>
+    <div class="card" style="border-color:rgba(16,185,129,.4);font-size:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-family:Fraunces,serif;font-size:17px;font-weight:700">TravelSecure JRK Komfort</div>
+          <div style="color:var(--mut);font-size:11px">Jahres-Reiseschutz · Familientarif · Würzburger Versicherung</div>
+        </div>
+        <span class="pill pill-must" style="font-size:11px">Finanztest 1,2 · SEHR GUT</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px">
+        <div style="padding:8px;background:rgba(16,185,129,.06);border-radius:6px">
+          <div style="color:var(--mut);margin-bottom:3px">Reiserücktritt</div>
+          <div style="font-weight:700;color:#10b981">✅ versichert</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">Vor Abreise bis 30.07.</div>
+        </div>
+        <div style="padding:8px;background:rgba(16,185,129,.06);border-radius:6px">
+          <div style="color:var(--mut);margin-bottom:3px">Reiseabbruch</div>
+          <div style="font-weight:700;color:#10b981">✅ versichert</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">Während Reise 01.08–08.09.</div>
+        </div>
+        <div style="padding:8px;background:rgba(79,126,247,.08);border-radius:6px;border:1px solid rgba(79,126,247,.2)">
+          <div style="color:var(--mut);margin-bottom:3px">Auslandskranken (AKV)</div>
+          <div style="font-weight:700;color:#4f7ef7">✅ inkl. Krankenrücktransport</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">Kein AU–DE Abkommen = kein Problem</div>
+        </div>
+        <div style="padding:8px;background:rgba(16,185,129,.06);border-radius:6px">
+          <div style="color:var(--mut);margin-bottom:3px">Reisegepäck</div>
+          <div style="font-weight:700;color:#10b981">✅ bis €4.000</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">Selbstbehalt €150/Fall</div>
+        </div>
+        <div style="padding:8px;background:rgba(16,185,129,.06);border-radius:6px">
+          <div style="color:var(--mut);margin-bottom:3px">Kinder</div>
+          <div style="font-weight:700;color:#10b981">✅ alle 4 mitversichert</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">bis 25 J. / Ende Ausbildung</div>
+        </div>
+        <div style="padding:8px;background:rgba(16,185,129,.06);border-radius:6px">
+          <div style="color:var(--mut);margin-bottom:3px">Gültigkeit</div>
+          <div style="font-weight:700">Jahresschutz 2026</div>
+          <div style="color:var(--mut);font-size:10px;margin-top:2px">Beliebig viele Reisen</div>
+        </div>
+      </div>
+      <a href="https://www.travelsecure.de/bedingungen/PI_JRK_Komfort.pdf" target="_blank" rel="noopener" class="lbtn" style="display:inline-flex;align-items:center;gap:6px">Versicherungsbedingungen (PDF) <i class="ti ti-external-link"></i></a>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Leistungsumfang im Detail</div>
+    <div class="grid2">
+      <div class="card" style="font-size:12px">
+        <div style="color:#10b981;font-weight:700;margin-bottom:8px">✅ Versicherte Ereignisse</div>
+        <ul style="margin:0;padding-left:16px;line-height:2">
+          <li>Schwere Erkrankung / Unfall</li>
+          <li>COVID-19 Erkrankung &amp; Quarantäne</li>
+          <li>Schwangerschaft</li>
+          <li>Jobverlust / Kündigung / Kurzarbeit</li>
+          <li>Elementarschäden (Überflutung etc.)</li>
+          <li>Gerichtliche Ladung / Zeugenpflicht</li>
+          <li>Schadensereignis am Eigentum</li>
+        </ul>
+      </div>
+      <div class="card" style="font-size:12px">
+        <div style="color:#ef4444;font-weight:700;margin-bottom:8px">❌ Nicht versichert</div>
+        <ul style="margin:0;padding-left:16px;line-height:2">
+          <li>Allgemeine Reisewarnungen (Auswärtiges Amt)</li>
+          <li>Lockdowns / behördliche Einreisesperren</li>
+          <li>Bekannte Vorerkrankungen (Einzelfallprüfung)</li>
+          <li>Vorsätzliche Handlungen</li>
+        </ul>
+        <div style="margin-top:10px;padding:6px 8px;background:rgba(16,185,129,.08);border-radius:6px;color:#10b981;font-size:11px">
+          ✅ ADAC Premium deckt AKV zusätzlich als Basisschutz — doppelt abgesichert.
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Im Schadensfall</div>
+    <div class="card" style="font-size:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Kontakt TravelSecure</div>
+          <div style="color:var(--mut);line-height:1.8">Notfall-Hotline: auf Police/App<br>Schaden melden: travelsecure.de<br>Zugehörige Gesellschaft: Würzburger Versicherung</div>
+        </div>
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">Wichtige Dokumente mitführen</div>
+          <ul style="margin:0;padding-left:16px;line-height:1.8;color:var(--mut)">
+            <li>Versicherungsschein (Police)</li>
+            <li>Buchungsbestätigungen (Flug, Hotel, Camper)</li>
+            <li>Bei Krankheit: ärztliche Bescheinigung</li>
+          </ul>
+        </div>
+      </div>
+    </div>`;
+  stagger('#tversicherung .card');
+
+  // Dokumente
+  const dok=[
+    {doc:'Reisepass',wer:'alle 6',orig:'✅ Pflicht — bei Einreise &amp; Camper-Abholung',kopie:'✅ Scan/Foto als Backup',warn:false},
+    {doc:'Personalausweis',wer:'alle 6 (falls vorhanden)',orig:'optional — kein Ersatz für Reisepass in AU',kopie:'optional',warn:false},
+    {doc:'Geburtsurkunde',wer:'Erik, Ida, Anton, Lene',orig:'empfohlen — falls Nachweis der Familienbeziehung nötig',kopie:'✅',warn:false},
+    {doc:'Nationaler Kartenführerschein',wer:'Florian, Laura',orig:'✅ Pflicht bei Camper-Abholung',kopie:'✅',warn:false},
+    {doc:'Internationaler Führerschein (IDP)',wer:'Florian, Laura',orig:'✅ Pflicht — Vermieter verlangt „alle Führerscheine auf Englisch", Termin bereits gebucht',kopie:'✅',warn:true},
+    {doc:'Reiseversicherungspolice TravelSecure JRK Komfort',wer:'Familie, 1×',orig:'empfohlen als Ausdruck',kopie:'✅ Pflicht griffbereit (PDF/App)',warn:false},
+    {doc:'Camper-Buchungsbestätigung CRUISIN (Conf. 260460)',wer:'Familie, 1×',orig:'empfohlen als Ausdruck für Pick-up',kopie:'✅',warn:false},
+    {doc:'Flugtickets Turkish Airlines (Res.-Code U3882Y)',wer:'alle 6',orig:'nicht nötig — E-Ticket reicht',kopie:'✅ Pflicht',warn:false},
+    {doc:'Hotelbuchung Sydney (Anreisenacht)',wer:'Familie, 1×',orig:'nicht nötig',kopie:'✅',warn:false},
+    {doc:'Impfausweis / Gelber Impfpass',wer:'alle 6, v.a. Kinder',orig:'empfohlen mitzuführen',kopie:'✅ Foto als Backup',warn:false},
+    {doc:'Australien-Einreise (ETA/eVisitor)',wer:'alle 6',orig:'nicht erforderlich — rein digital, an Passnummer gekoppelt',kopie:'✅ Bestätigungsmail speichern',warn:true},
+    {doc:'Kreditkarte (Kautionshinterlegung Camper)',wer:'Florian und/oder Laura',orig:'✅ Pflicht — meist nur Kreditkarte akzeptiert, kein Girocard/EC',kopie:'—',warn:true},
+  ];
+  const dokRows=dok.map(d=>`<tr><td style="padding:8px 10px;font-weight:600">${d.doc}${d.warn?' <span class="pill pill-warn" style="margin-left:4px">⚠ prüfen</span>':''}</td><td style="padding:8px 10px;color:var(--mut)">${d.wer}</td><td style="padding:8px 10px">${d.orig}</td><td style="padding:8px 10px">${d.kopie}</td></tr>`).join('');
+  document.getElementById('tdokumente').innerHTML=`
+    <div class="alert" style="font-size:12px">⚠ Wichtigster Punkt: Camper-Vermieter verlangt bei Pick-up alle Führerscheine auf Englisch — Original-Kartenführerschein <strong>und</strong> Internationaler Führerschein (IDP) müssen für Florian &amp; Laura im Original vorliegen. IDP-Termin ist laut Buchungs-Checkliste bereits gebucht.</div>
+    <div class="info" style="font-size:12px">Annahme, nicht verifiziert: ETA/eVisitor-Pflicht &amp; Kreditkarten-Kaution beim Camper — vor Abflug direkt bei CRUISIN bzw. im offiziellen australischen Einreisesystem gegenprüfen.</div>
+
+    <div class="sec-title">Original vs. digitale Kopie — pro Dokument</div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Dokument</th><th>Für wen</th><th>🗂 Original mitführen</th><th>📱 Digitale Kopie</th></tr></thead>
+          <tbody>${dokRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Ablage-Empfehlung digitale Kopien</div>
+    <div class="card" style="font-size:12px">
+      <ul style="margin:0;padding-left:16px;line-height:2;color:var(--mut)">
+        <li>Alle Scans/Fotos in einen eigenen Cloud-Ordner (z. B. Synology Drive, offline verfügbar auf allen Handys) — Zugriff auch ohne Internet vor Ort.</li>
+        <li>Zusätzlich je 1 Kopie per E-Mail an sich selbst — funktioniert als Fallback, wenn Handy verloren geht.</li>
+        <li>Originale von Reisepass &amp; Führerscheinen NIE alle zusammen an einem Ort verstauen — auf 2 Erwachsene aufteilen.</li>
+      </ul>
+    </div>`;
+  stagger('#tdokumente .card');
+
+  // Konnektivität
+  const simSetup=[
+    {rolle:'Ankunfts-/Backup-eSIM',anbieter:'Saily „Asia &amp; Oceania 25 GB / 60 Tage" (48,99 USD)',status:'✅ Erledigt — Florian selbst vor Abflug'},
+    {rolle:'Haupt-SIM ab ca. Tag 2–3',anbieter:'Boost Mobile (dieses Briefing)',status:'⬜ Aktivierung vor Ort in Australien'},
+  ];
+  const simRows=simSetup.map(s=>`<tr><td style="font-weight:600">${s.rolle}</td><td>${s.anbieter}</td><td>${s.status}</td></tr>`).join('');
+
+  const boostPlans=[
+    {plan:'$28',bonus:'21 GB',standard:'8 GB'},
+    {plan:'$39 · Empfehlung',bonus:'80 GB',standard:'30 GB'},
+    {plan:'$49',bonus:'110–125 GB',standard:'45–55 GB'},
+    {plan:'$59',bonus:'160 GB',standard:'100 GB'},
+  ];
+  const boostRows=boostPlans.map(p=>`<tr${p.plan.includes('Empfehlung')?' style="background:rgba(16,185,129,.08)"':''}><td style="font-weight:700">${p.plan}</td><td>${p.bonus}</td><td>${p.standard}</td></tr>`).join('');
+
+  const boostSteps=[
+    'Bevorzugt: eSIM per App. „My Boost Mobile"-App laden → „Buy a prepaid plan on eSIM" → $39-Plan wählen → ID-Verifizierung mit Reisepass → Zahlung per Kreditkarte.',
+    '⚠ Geräte-Caveat: Boost weist darauf hin, dass eSIM bei im Ausland gekauften Geräten u. U. nicht funktioniert.',
+    'Falls die eSIM-Aktivierung am deutschen Handy scheitert → Fallback: physische SIM. Boost-Starter-SIM ($2 SIM + $39 Recharge) gibt es in Supermärkten (Woolworths, Coles) und 7-Eleven. Gleiche Pläne, gleiches Netz. Aktivierung online/App mit Reisepass.',
+    'Internet für die Aktivierung liefert die Saily-eSIM (deshalb die Reihenfolge).',
+  ];
+  const boostStepsHtml=boostSteps.map((t,i)=>`<div class="stop" style="margin-bottom:10px"><div class="stopnum">${i+1}</div><div style="flex:1;font-size:12px;padding-top:2px">${t}</div></div>`).join('');
+
+  const connTodos=[
+    '~01.08.: Boost aktivieren (Sydney/Ankunftsort), $39-Plan',
+    'vor ~28.08.: Recharge $39 (VOR Ablauf → Datenrollover der Restdaten)',
+    'Kreditkarte in der My-Boost-App hinterlegen, Auto-Recharge NICHT aktivieren (nach Abreise unnötig)',
+    'Nach Abreise: nichts kündigen nötig — Prepaid läuft einfach aus',
+    'Boost-Nummer nach Aktivierung im Dashboard notieren (für Buchungen/Restaurants vor Ort nützlich)',
+  ];
+  const connTodosHtml=connTodos.map((t,i)=>`<label style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;${i>0?'border-top:1px solid var(--brd);':''}font-size:12px;cursor:pointer"><input type="checkbox" style="margin-top:2px;width:15px;height:15px;accent-color:var(--au);flex-shrink:0"><span>${t}</span></label>`).join('');
+
+  document.getElementById('tkonnektivitaet').innerHTML=`
+    <div class="info">ℹ Preise/Aktionen Stand 27.07.2026 — Aktionskonditionen vor Kauf kurz gegenprüfen. Aktuelle Neukunden-Aktion „Activate by 10 August 2026" passt genau zum Ankunftsdatum.</div>
+
+    <div class="sec-title">SIM-Setup: zwei Karten</div>
+    <div class="card">
+      <div class="tbl-wrap"><table><thead><tr><th>Rolle</th><th>Anbieter</th><th>Status</th></tr></thead><tbody>${simRows}</tbody></table></div>
+    </div>
+    <div class="card" style="margin-top:12px;font-size:12px">
+      <div style="font-weight:700;margin-bottom:6px;font-family:Fraunces,serif;font-size:14px">Warum Boost?</div>
+      <div style="margin-bottom:10px">Einziger Reseller mit Zugriff auf das volle Telstra Prepaid-Netz (beste Abdeckung Australiens, auch abseits der Küstenorte). Sehr große Datenpakete, Hotspot ohne Extra-Limit, echte australische Nummer inkl. unbegrenzter Anrufe/SMS national.</div>
+      <div style="font-weight:700;margin-bottom:6px;font-family:Fraunces,serif;font-size:14px">Warum nicht aus Deutschland?</div>
+      <div>Boost/Telstra verlangen ID-Verifizierung. Aus Deutschland mit deutschem Pass scheitert das (bereits getestet mit Telstra). Vor Ort in Australien ist die Aktivierung mit ausländischem Reisepass dagegen Standard für Touristen.</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Boost Mobile Pläne (28 Tage, AUD)</div>
+    <div class="card">
+      <div class="tbl-wrap"><table><thead><tr><th>Plan</th><th>Daten (erste 3 Aufladungen)</th><th>Daten ab 4. Aufladung</th></tr></thead><tbody>${boostRows}</tbody></table></div>
+    </div>
+    <div class="card" style="margin-top:12px;font-size:12px">
+      <ul style="margin:0;padding-left:18px;line-height:1.9">
+        <li>Alle Pläne: unbegrenzte nationale Anrufe &amp; SMS, Datenrollover bei Verlängerung vor Ablauf, 150 Mbps Speedcap (praktisch irrelevant).</li>
+        <li>Plan für 40 Tage: $39-Plan aktivieren (~01.08.) → 1. Periode bis ~29.08. → einmal für $39 aufladen → deckt bis Abreise 08.09. = 160 GB für ~78 AUD (~48 €).</li>
+        <li>Bonusdaten gelten für die ersten 3 Aufladungen — bei uns greifen also beide Perioden mit 80 GB.</li>
+      </ul>
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Aktivierung vor Ort (Tag 1–3)</div>
+    <div class="card">${boostStepsHtml}</div>
+
+    <div class="sec-title" style="margin-top:20px">To-dos</div>
+    <div class="card">${connTodosHtml}</div>
+
+    <div class="sec-title" style="margin-top:20px">Boost-Nummer (nach Aktivierung eintragen)</div>
+    <div class="card" style="font-size:12px;color:var(--mut)">
+      <input type="text" placeholder="z. B. 04XX XXX XXX" style="width:100%;background:#0f1117;border:1px solid var(--brd);border-radius:6px;color:var(--txt);padding:8px 10px;font-size:13px">
+    </div>
+
+    <div class="sec-title" style="margin-top:20px">Quellen</div>
+    <div class="card" style="font-size:12px;display:flex;flex-direction:column;gap:6px">
+      <a href="https://www.boost.com.au/shop/boost-mobile-28-day-sims" target="_blank" rel="noopener" style="color:#4f7ef7">boost.com.au/shop/boost-mobile-28-day-sims — Pläne</a>
+      <a href="https://www.boost.com.au" target="_blank" rel="noopener" style="color:#4f7ef7">boost.com.au — eSIM-Infos (My Boost Mobile App)</a>
+      <div style="color:var(--mut)">Netz: „Full Telstra Prepaid Mobile Network"</div>
+    </div>`;
+  stagger('#tkonnektivitaet .card');
+})();
+</script>
+</body>
+</html>
