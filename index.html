@@ -197,7 +197,7 @@ function renderLiveBudget(sum,ausgaben){
   const bestRows=bestaetigt.slice(0,15).map(a=>`<tr><td>${a.datum||'–'}</td><td>${a.kategorie}</td><td>${a.beschreibung||''}</td><td style="text-align:right">${a.betrag_aud} AUD</td></tr>`).join('');
 
   card.innerHTML=`
-    <div style="font-size:13px;font-weight:600;margin-bottom:10px">Gesamt: € ${sum.total_ist_eur} von € ${sum.total_plan_eur} (Rest € ${sum.total_rest_eur}) · Kurs 1 AUD ≈ € ${sum.kurs_aud_eur}</div>
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px">Gesamt ausgegeben: ${sum.total_ist_aud} AUD ≈ <b>€ ${sum.total_ist_eur}</b> von € ${sum.total_plan_eur} Plan (Rest € ${sum.total_rest_eur}) · Kurs 1 AUD ≈ € ${sum.kurs_aud_eur}</div>
     ${rows}
     ${offen.length?`<div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8b91a3;margin:16px 0 8px">Zu prüfen (${offen.length})</div>${offenHtml}`:''}
     ${bestaetigt.length?`<div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#8b91a3;margin:16px 0 8px">Bestätigt (letzte ${Math.min(15,bestaetigt.length)})</div><table style="font-size:11px"><tbody>${bestRows}</tbody></table>`:''}
