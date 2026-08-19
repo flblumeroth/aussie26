@@ -289,7 +289,7 @@ const checklist=[
   {text:'Wassertaxi nach Dunk Island (Mission Beach) vorab reservieren.'},
   {text:'Kuranda Skyrail & Scenic Railway Kombiticket online buchen (günstiger als Tageskasse).'},
   {text:'Australia Zoo Tickets online buchen.'},
-  {text:'Caravan-Park-Stellplätze für Byron Bay, Gold Coast & Cairns vorbuchen (Airlie gestrichen); ✅ Alle Camps bis 24.08. gebucht (Bargara, Yeppoon, Gemfields — Stand 16.08.). Noch offen: Eungella ab 24.08., Townsville ab 26.08., Cairns NUR 29.08.–01.09. (letzte 3 Nächte Cool Waters ✅ #149420) (Winterferien AU!).'},
+  {text:'Caravan-Park-Stellplätze für Byron Bay, Gold Coast & Cairns vorbuchen (Airlie gestrichen); ✅ Alle Camps bis 24.08. gebucht (Bargara, Yeppoon, Gemfields — Stand 16.08.). ✅ Townsville gebucht (26.–29.08., BIG4 Rowes Bay #247671, Stand 19.08.). Eungella nur Nacht 2 gebucht (QPWS #16108442) — Nacht 1 (24.08.) noch offen. Noch komplett offen: Cairns 29.08.–01.09. (letzte 3 Nächte Cool Waters ✅ #149420) (Winterferien AU!).'},
   {text:'Discovery Parks / NRMA Parks für Etappen mit Kindern bevorzugen (Pool, Spielplatz, Powered Sites).'},
   {text:'WikiCamps Australia & QPWS-Camping-App installieren.'},
   {text:'Reiseapotheke mit deutschen Kinderpräparaten mitbringen (Ibuprofen-Saft, Fieberzäpfchen etc.).'},
@@ -407,16 +407,16 @@ const stops=[
    marketUrl:'https://www.google.com/maps/search/Woolworths+Emerald+QLD',
    resto:null,restoNote:null,restoUrl:null,warn:'Outback-Etappe: Wasser + Vorräte komplett in Emerald aufstocken'},
   {name:'Eungella Nationalpark',region:'QLD',nights:2,from:'~370 km / 5 h ab Gemfields (Gregory/Peak Downs Hwy)',hi:'Wilde Platypus an der Broken River Bridge, Finch Hatton Gorge; Cape Hillsborough NP (Kängurus am Strand) als Optional-Stopp auf der Weiterfahrt nach Townsville (+30 km ab Mackay)',
-   park:'Broken River Mountain Resort',parkNote:'Direkt am Platypus-Spot! Powered Sites + Pool – einzige gute Option im NP',
-   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ6RADPoEO2msRxxBmW3u4j8Y',
+   park:'Broken River Camping Area (QPWS)',parkNote:'Direkt am Platypus-Spot. ⚠ Broken River Mountain Resort (privat, gleicher Ort) bietet KEINE Powered Sites, nur Cabins/Lodges — die eigentlichen Camper-Stellplätze gehören zur separaten QPWS-Nationalpark-Camping-Area. Nacht 24.08. offen, Nacht 25.08. ✅ gebucht (QPWS-Permit #16108442, 31 AUD, Multi-use Site, 2 Erw. + 3 Kinder ab 5 J. — Kleinkinder unter 5 zählen nicht mit).',
+   parkUrl:'https://www.google.com/maps/search/Broken+River+camping+area+Eungella+National+Park',
    market:'⚠ KEINE Supermärkte im NP! → Coles Mackay (50 km bergab)',marketNote:'Vor Auffahrt in den NP einkaufen',
    marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJkfPRBvnT22sR05G5ZRVT2L0',
    resto:'Broken River Mountain Resort Restaurant',restoNote:'Einzige Option im NP – überraschend gut, abends nach Platypus-Watching',
    restoUrl:'https://www.google.com/maps/place/?q=place_id:ChIJ6RADPoEO2msRxxBmW3u4j8Y',
    warn:'VORRÄTE AUFSTOCKEN in Mackay (50 km vor dem NP) – Coles oder Woolworths City Centre!'},
   {name:'Townsville',region:'QLD',nights:3,from:'~460 km / 6 h ab Eungella — früh starten!',hi:'Magnetic Island: Wilde Koalas & Felskängurus; The Strand Waterpark (KOSTENLOS! tägl. 10–20 Uhr, direkt am Meer — Kinder-Highlight)',
-   park:'Discovery Parks Townsville',parkNote:'Pool, gut gelegen, nahe The Strand',
-   parkUrl:'https://www.google.com/maps/place/?q=place_id:ChIJp1InZEJNFmsRRAsaxYkBkpQ',
+   park:'BIG4 Tasman Holiday Parks – Rowes Bay',parkNote:'✅ Gebucht + bezahlt (Best.-Nr. 247671, 26.–29.08., 3 Nächte, Premium Evergreen Motorhome Site Powered, 345 AUD, 2 Erw. + 4 Kinder) — Pool, gut gelegen, nahe The Strand',
+   parkUrl:'https://www.google.com/maps/search/BIG4+Tasman+Holiday+Parks+Rowes+Bay+Townsville',
    market:'Woolworths Willows Shopping Centre',marketNote:'Riesiger Carpark, mühelos mit Wohnmobil',
    marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJmTj6KpHw1WsRMdjO6m9YuT4',
    resto:'Longboard Bar & Grill (The Strand)',restoNote:'Direkt am Strand, casual, Kinder-Menü, Aussicht auf Magnetic Island',
@@ -642,6 +642,13 @@ const practical=[
           const gebuchtAb=new Date(2026,8,1);
           status = d<gebuchtAb ? 'offen' : 'gebucht';
           platz = d<gebuchtAb ? 'BIG4 Coconut (Favorit, offen)' : 'Tasman Cairns Cool Waters';
+        } else if(s.name==='Eungella Nationalpark'){
+          // Sonderfall: nur Nacht 2 (25.08.) per QPWS-Permit #16108442 gebucht, Nacht 1 (24.08.) offen —
+          // ebenfalls nicht per Textsuche pro Nacht trennbar, daher explizit anhand des Datums (siehe
+          // stops[]-Eintrag "Eungella Nationalpark").
+          const gebuchtAb=new Date(2026,7,25);
+          status = d<gebuchtAb ? 'offen' : 'gebucht';
+          platz = d<gebuchtAb ? 'Broken River Camping Area (offen)' : 'Broken River Camping Area (QPWS #16108442)';
         } else {
           const note=s.parkNote||'';
           status = /✅|gebucht|bezahlt/i.test(note) ? 'gebucht' : 'offen';
