@@ -650,13 +650,12 @@ const practical=[
         cursor.setDate(cursor.getDate()+1);
       }
     });
-    // Sydney-Nächte (04.–07.09.) sind nicht in stops[] enthalten — kein Camper mehr, Hotel nicht
-    // dokumentiert. days[] (Tag 36) markiert die Datumszählung ab 05.09. explizit als "noch nicht mit
-    // dem Alternativplan abgeglichen" (Original hatte einen Cairns-Tag mehr). Die hier verwendeten
-    // Daten folgen der literalen days[]-Angabe (Abreise 08.09. abends, siehe Tag 39) und werden als
-    // unsicher markiert statt die Lücke zu verschweigen.
+    // Sydney-Nächte (04.–07.09.) sind nicht in stops[] enthalten (kein Camper mehr), aber im
+    // Flug-Tab als Hotelbuchung dokumentiert: Moxy Sydney Airport, 56 Baxter Road, Mascot NSW 2020,
+    // Fr 4.–Di 8. Sept. 2026, 4 Nächte, ✅ Bestätigt (per Buchungs-Screenshot 19.08.2026 verifiziert —
+    // deckt sich exakt mit diesen 4 Daten und mit Tag 35-39 in days[]).
     ['2026-09-04','2026-09-05','2026-09-06','2026-09-07'].forEach(iso=>{
-      naechte.push({date:new Date(iso+'T00:00:00'), ort:'Sydney', platz:null, status:'offen', unsicher:true});
+      naechte.push({date:new Date(iso+'T00:00:00'), ort:'Sydney', platz:'Moxy Sydney Airport', status:'gebucht', unsicher:false});
     });
     return naechte;
   }
@@ -693,7 +692,7 @@ const practical=[
     }
     document.getElementById('tkalender').innerHTML=`
       <div class="sec-title">Übernachtungs-Kalender</div>
-      <div class="info">🟢 Grün = Campground/Hotel gebucht &nbsp; 🔴 Rot = noch offen / keine feste Buchung &nbsp; ⚠ gestrichelter Rand = Datum oder Buchungsstatus unsicher (Sydney-Tage ab 04.09. — Datumszählung laut Notiz im Tagesplan noch nicht final mit dem Alternativplan abgeglichen).</div>
+      <div class="info">🟢 Grün = Campground/Hotel gebucht &nbsp; 🔴 Rot = noch offen / keine feste Buchung &nbsp; ⚠ gestrichelter Rand = Datum oder Buchungsstatus unsicher.</div>
       <div class="kalwrap"><table class="kaltable"><thead><tr><th></th>${wd.map(w=>`<th>${w}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
   }
   renderKalender();
