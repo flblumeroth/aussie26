@@ -75,6 +75,20 @@ tr:last-child td{border-bottom:none;}
 a.lbtn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--nat);background:rgba(62,102,80,.15);border:1px solid rgba(62,102,80,.3);border-radius:6px;padding:4px 9px;text-decoration:none;margin-top:6px;}
 a.lbtn:hover{background:rgba(62,102,80,.3);}
 @media(max-width:600px){.stats{gap:6px;}.stat{min-width:70px;}.sv{font-size:18px;}}
+/* Kalender */
+.kalwrap{overflow-x:auto;}
+.kaltable{width:100%;border-collapse:collapse;min-width:720px;}
+.kaltable th{background:var(--card);color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.04em;text-align:center;padding:6px 4px;border:1px solid var(--brd);}
+.kal-week{background:var(--card);color:var(--mut);font-size:10px;text-align:center;vertical-align:middle;border:1px solid var(--brd);white-space:nowrap;padding:4px 6px;}
+.kalcell{border:1px solid var(--brd);vertical-align:top;height:60px;width:13%;padding:4px 6px;font-size:10px;position:relative;}
+.kalcell.kal-empty{background:var(--bg);opacity:.35;}
+.kalcell.kal-booked{background:rgba(16,185,129,.16);}
+.kalcell.kal-open{background:rgba(239,68,68,.14);}
+.kalcell.kal-travel{background:var(--card2);}
+.kalcell.kal-uncertain{border-style:dashed;border-color:var(--yel);}
+.kal-date{font-weight:700;font-size:11px;margin-bottom:2px;color:var(--txt);}
+.kal-place{font-size:9.5px;color:var(--txt);line-height:1.25;overflow-wrap:anywhere;}
+.kal-warn{position:absolute;top:3px;right:4px;font-size:10px;}
 </style>
 </head>
 <body>
@@ -114,6 +128,7 @@ a.lbtn:hover{background:rgba(62,102,80,.3);}
     <div class="tab active" onclick="sTab('uebersicht',this)">📋 Übersicht</div>
     <div class="tab" onclick="sTab('etappen',this)">🗺 Etappen</div>
     <div class="tab" onclick="sTab('tagesplan',this)">📅 Tagesplan</div>
+    <div class="tab" onclick="sTab('kalender',this)">🗓 Kalender</div>
     <div class="tab" onclick="sTab('highlights',this)">🌿 Naturhighlights</div>
     <div class="tab" onclick="sTab('budget',this)">💰 Budget</div>
     <div class="tab" onclick="sTab('tipps',this)">💡 Insider-Tipps</div>
@@ -127,6 +142,7 @@ a.lbtn:hover{background:rgba(62,102,80,.3);}
   <div id="tuebersicht" class="tc active"></div>
   <div id="tetappen" class="tc"></div>
   <div id="ttagesplan" class="tc"></div>
+  <div id="tkalender" class="tc"></div>
   <div id="thighlights" class="tc"></div>
   <div id="tbudget" class="tc"></div>
   <div id="ttipps" class="tc"></div>
@@ -601,6 +617,86 @@ const practical=[
     <div class="sec-title">39 Tage · 01.08. – 08.09.2026</div>
     <div class="info" style="margin-bottom:10px">Lange Fahrtage (rot markiert) bitte früh starten. Powered Sites in Caravan Parks für Etappen mit Kindern bevorzugen.</div>
     <div class="tbl-wrap"><table><thead><tr><th>Tag</th><th>Datum</th><th>Ort / Etappe</th><th>Strecke</th><th>Highlight</th></tr></thead><tbody>${dayRows}</tbody></table></div>`;
+
+  // Kalender — Nächte werden zur Laufzeit aus stops[] (Reihenfolge + nights + parkNote-Buchungsstatus)
+  // berechnet, damit die Ansicht automatisch synchron bleibt, wenn stops[] sich ändert.
+  function isoDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function isoWeek(d){
+    const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+    const day=(dt.getUTCDay()+6)%7;
+    dt.setUTCDate(dt.getUTCDate()-day+3);
+    const firstThu=new Date(Date.UTC(dt.getUTCFullYear(),0,4));
+    return 1+Math.round((dt-firstThu)/(7*86400000));
+  }
+  function computeKalenderNaechte(){
+    const naechte=[];
+    let cursor=new Date(2026,7,1); // 01.08.2026, Reisebeginn
+    stops.forEach(s=>{
+      for(let i=0;i<s.nights;i++){
+        const d=new Date(cursor);
+        let status, ort=s.name.replace(/^⭐ NEU:\s*/,''), platz=s.park;
+        if(s.name==='Cairns'){
+          // Sonderfall: parkNote nennt zwei Buchungsblöcke in einem Feld (29.08.–01.09. offen/Favorit
+          // BIG4 Coconut, 01.–04.09. gebucht #149420) — lässt sich nicht per Textsuche pro Nacht trennen,
+          // daher hier explizit anhand des Datums aufgeteilt (siehe stops[]-Eintrag "Cairns").
+          const gebuchtAb=new Date(2026,8,1);
+          status = d<gebuchtAb ? 'offen' : 'gebucht';
+          platz = d<gebuchtAb ? 'BIG4 Coconut (Favorit, offen)' : 'Tasman Cairns Cool Waters';
+        } else {
+          const note=s.parkNote||'';
+          status = /✅|gebucht|bezahlt/i.test(note) ? 'gebucht' : 'offen';
+        }
+        naechte.push({date:d, ort, platz, status, unsicher:false});
+        cursor.setDate(cursor.getDate()+1);
+      }
+    });
+    // Sydney-Nächte (04.–07.09.) sind nicht in stops[] enthalten — kein Camper mehr, Hotel nicht
+    // dokumentiert. days[] (Tag 36) markiert die Datumszählung ab 05.09. explizit als "noch nicht mit
+    // dem Alternativplan abgeglichen" (Original hatte einen Cairns-Tag mehr). Die hier verwendeten
+    // Daten folgen der literalen days[]-Angabe (Abreise 08.09. abends, siehe Tag 39) und werden als
+    // unsicher markiert statt die Lücke zu verschweigen.
+    ['2026-09-04','2026-09-05','2026-09-06','2026-09-07'].forEach(iso=>{
+      naechte.push({date:new Date(iso+'T00:00:00'), ort:'Sydney', platz:null, status:'offen', unsicher:true});
+    });
+    return naechte;
+  }
+  function renderKalender(){
+    const naechte=computeKalenderNaechte();
+    const map={};
+    naechte.forEach(n=>{ map[isoDate(n.date)]=n; });
+    const start=new Date(2026,7,1), end=new Date(2026,8,8); // 01.08.–08.09.2026 (08.09. = Abreiseabend, keine Übernachtung)
+    const gridStart=new Date(start); gridStart.setDate(gridStart.getDate()-((gridStart.getDay()+6)%7));
+    const gridEnd=new Date(end); gridEnd.setDate(gridEnd.getDate()+((7-gridEnd.getDay())%7));
+    const wd=['Mo','Di','Mi','Do','Fr','Sa','So'];
+    let rows='', cur=new Date(gridStart);
+    while(cur<=gridEnd){
+      let row=`<td class="kal-week">KW ${isoWeek(cur)}</td>`;
+      for(let i=0;i<7;i++){
+        const iso=isoDate(cur);
+        const inTrip=cur>=start&&cur<=end;
+        const dateLbl=String(cur.getDate()).padStart(2,'0')+'.'+String(cur.getMonth()+1).padStart(2,'0')+'.';
+        if(!inTrip){
+          row+=`<td class="kalcell kal-empty"></td>`;
+        } else if(iso==='2026-09-08'){
+          row+=`<td class="kalcell kal-travel"><div class="kal-date">${dateLbl}</div><div class="kal-place">✈ Abreise</div></td>`;
+        } else {
+          const n=map[iso];
+          const cls=n&&n.status==='gebucht' ? 'kal-booked' : 'kal-open';
+          const uns=n&&n.unsicher ? ' kal-uncertain' : '';
+          const warnIcon=n&&n.unsicher ? '<span class="kal-warn" title="Datum/Buchungsstatus unsicher — siehe Hinweis unter dem Kalender">⚠</span>' : '';
+          const place=n ? (n.platz||n.ort) : '';
+          row+=`<td class="kalcell ${cls}${uns}">${warnIcon}<div class="kal-date">${dateLbl}</div><div class="kal-place">${place}</div></td>`;
+        }
+        cur.setDate(cur.getDate()+1);
+      }
+      rows+=`<tr>${row}</tr>`;
+    }
+    document.getElementById('tkalender').innerHTML=`
+      <div class="sec-title">Übernachtungs-Kalender</div>
+      <div class="info">🟢 Grün = Campground/Hotel gebucht &nbsp; 🔴 Rot = noch offen / keine feste Buchung &nbsp; ⚠ gestrichelter Rand = Datum oder Buchungsstatus unsicher (Sydney-Tage ab 04.09. — Datumszählung laut Notiz im Tagesplan noch nicht final mit dem Alternativplan abgeglichen).</div>
+      <div class="kalwrap"><table class="kaltable"><thead><tr><th></th>${wd.map(w=>`<th>${w}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  renderKalender();
 
   // Highlights
   const actCards=activities.map(a=>`<div class="card">${a.warn?'<div class="alert" style="margin-bottom:8px;padding:6px 10px;font-size:11px">⚠ Altersfreigabe vorab beim Anbieter prüfen!</div>':''}<span class="pill ${a.tag==='must'?'pill-must':'pill-nice'}">${a.tag==='must'?'Must-Do':'Nice-to-Have'}</span><div style="font-family:Fraunces,serif;font-size:14px;font-weight:600;margin:8px 0 4px">${a.title}</div><div style="font-size:12px;margin-bottom:6px">${a.desc}</div><div style="font-size:11px;color:var(--mut)">${a.price} · ${a.dur}</div><a class="lbtn" href="${a.link}" target="_blank" rel="noopener">Mehr erfahren <i class="ti ti-external-link"></i></a></div>`).join('');
