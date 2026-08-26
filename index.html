@@ -405,7 +405,7 @@ const stops=[
    marketUrl:'https://www.google.com/maps/search/Woolworths+Emerald+QLD',
    resto:null,restoNote:null,restoUrl:null,warn:'Outback-Etappe: Wasser + Vorräte komplett in Emerald aufstocken'},
   {name:'Eungella Nationalpark',region:'QLD',nights:2,from:'~370 km / 5 h ab Gemfields (Gregory/Peak Downs Hwy)',hi:'Wilde Platypus an der Broken River Bridge, Finch Hatton Gorge; Cape Hillsborough NP (Kängurus am Strand) als Optional-Stopp auf der Weiterfahrt nach Townsville (+30 km ab Mackay)',
-   park:'Broken River Camping Area (QPWS)',parkNote:'Direkt am Platypus-Spot. ⚠ Broken River Mountain Resort (privat, gleicher Ort) bietet KEINE Powered Sites, nur Cabins/Lodges — die eigentlichen Camper-Stellplätze gehören zur separaten QPWS-Nationalpark-Camping-Area. Nacht 24.08. offen, Nacht 25.08. ✅ gebucht (QPWS-Permit #16108442, 31 AUD, Multi-use Site, 2 Erw. + 3 Kinder ab 5 J. — Kleinkinder unter 5 zählen nicht mit).',
+   park:'Broken River Camping Area (QPWS)',parkNote:'Direkt am Platypus-Spot. ⚠ Broken River Mountain Resort (privat, gleicher Ort) bietet KEINE Powered Sites, nur Cabins/Lodges — die eigentlichen Camper-Stellplätze gehören zur separaten QPWS-Nationalpark-Camping-Area. Nacht 24.08. ✅ spontan vor Ort gebucht + bezahlt (Campingplatz „Neem Hall" am Cattle Creek, 29 AUD), Nacht 25.08. ✅ gebucht (QPWS-Permit #16108442, 31 AUD, Multi-use Site, 2 Erw. + 3 Kinder ab 5 J. — Kleinkinder unter 5 zählen nicht mit).',
    parkUrl:'https://www.google.com/maps/search/Broken+River+camping+area+Eungella+National+Park',
    market:'⚠ KEINE Supermärkte im NP! → Coles Mackay (50 km bergab)',marketNote:'Vor Auffahrt in den NP einkaufen',
    marketUrl:'https://www.google.com/maps/place/?q=place_id:ChIJkfPRBvnT22sR05G5ZRVT2L0',
@@ -642,12 +642,13 @@ const practical=[
         const d=new Date(cursor);
         let status, ort=s.name.replace(/^⭐ NEU:\s*/,''), platz=s.park;
         if(s.name==='Eungella Nationalpark'){
-          // Sonderfall: nur Nacht 2 (25.08.) per QPWS-Permit #16108442 gebucht, Nacht 1 (24.08.) offen —
-          // ebenfalls nicht per Textsuche pro Nacht trennbar, daher explizit anhand des Datums (siehe
-          // stops[]-Eintrag "Eungella Nationalpark").
+          // Sonderfall: 2 verschiedene Plätze pro Nacht, nicht per Textsuche trennbar, daher explizit
+          // anhand des Datums (siehe stops[]-Eintrag "Eungella Nationalpark"). Nacht 24.08.: spontan vor
+          // Ort gebucht, Campingplatz „Neem Hall" am Cattle Creek (29 AUD, bestätigt 24.08.). Nacht 25.08.:
+          // QPWS-Permit #16108442, Broken River Camping Area.
           const gebuchtAb=new Date(2026,7,25);
-          status = d<gebuchtAb ? 'offen' : 'gebucht';
-          platz = d<gebuchtAb ? 'Broken River Camping Area (offen)' : 'Broken River Camping Area (QPWS #16108442)';
+          status = 'gebucht';
+          platz = d<gebuchtAb ? 'Neem Hall Campground (Cattle Creek)' : 'Broken River Camping Area (QPWS #16108442)';
         } else {
           const note=s.parkNote||'';
           status = /✅|gebucht|bezahlt/i.test(note) ? 'gebucht' : 'offen';
